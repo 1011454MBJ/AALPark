@@ -54,19 +54,19 @@ public class Parking {
 		return departureDate;
 	}
 
-//	/**
-//	 * @param car the car to set
-//	 */
-//	public void setCar(Car car) {
-//		this.car = car;
-//	}
-//
-//	/**
-//	 * @param client the client to set
-//	 */
-//	public void setClient(Client client) {
-//		this.client = client;
-//	}
+	/**
+	 * @param car adding the car information
+	 */
+	public void addCarInformation(Car car) {
+		this.car = car;
+	}
+
+	/**
+	 * @param client the client to set
+	 */
+	public void addClientInformation(Client client) {
+		this.client = client;
+	}
 
 	/**
 	 * @param location moving car to a new location
@@ -82,13 +82,13 @@ public class Parking {
 		this.returnDate = returnDate;
 	}
 
-	/**
-	 * @param departureDate making the departure date future proved
-	 */
-	public void setDepartureDate(LocalDate departureDate) {
-		this.departureDate = departureDate;
-	}
-	
+//	/**
+//	 * @param departureDate making the departure date future proved
+//	 */
+//	public void setDepartureDate(LocalDate departureDate) {
+//		this.departureDate = departureDate;
+//	}
+//	
 	
 
 }
