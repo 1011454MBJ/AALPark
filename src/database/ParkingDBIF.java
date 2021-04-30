@@ -1,5 +1,8 @@
 package database;
 
-public class ParkingDBIF {
+import model.Parking;
 
+public interface ParkingDBIF {
+
+	public boolean saveParking(Parking parking);
 }

@@ -1,5 +1,8 @@
 package database;
 
-public class MotorRegisterDBIF {
+import model.*;
 
+public interface MotorRegisterDBIF {
+
+	public Car findCarByRegistrationNo(String regNo) throws DataAccessException;
 }
