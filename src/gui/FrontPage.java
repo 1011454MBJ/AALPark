@@ -14,7 +14,10 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class FrontPage extends JFrame {
 
@@ -64,13 +67,19 @@ public class FrontPage extends JFrame {
 		backgroundPanel.setBackground(Color.WHITE);
 		backgroundPanel.setBorder(new LineBorder(Color.BLACK, 2, true));
 		frontPagePane.add(backgroundPanel, "cell 0 0 4 18,grow");
-		backgroundPanel.setLayout(new MigLayout("", "[125px,grow]", "[22.00px][23px][22px][23px][22px][23px][22px][][22px][][22px][][22px][][22px]"));
+		backgroundPanel.setLayout(new MigLayout("", "[125px,grow]", "[85.00px,grow][23px][2px][23px][2px][23px][2px][23px][2px][23px][2px][23px][2px][23px][2px]"));
 		
 		JPanel topMenuPanel = new JPanel();
 		backgroundPanel.add(topMenuPanel, "cell 0 0,grow");
 		topMenuPanel.setLayout(new MigLayout("", "[]", "[]"));
 		
 		JButton registerNewParkingBtn = new JButton("Registrer parkering");
+		registerNewParkingBtn.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				showNewParkingDialog();
+			}
+		});
+		
 		registerNewParkingBtn.setFont(new Font("Arial", Font.PLAIN, 16));
 		backgroundPanel.add(registerNewParkingBtn, "cell 0 1");
 		
@@ -141,6 +150,13 @@ public class FrontPage extends JFrame {
 		JLabel frontPageSubtitleLbl = new JLabel("Venligst registrere din parkering her");
 		frontPageSubtitleLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		welcomePanel.add(frontPageSubtitleLbl, "cell 0 2");
+	}
+	
+
+	private void showNewParkingDialog() {
+		NewParkingDialog newParkingDialog = new NewParkingDialog();
+		newParkingDialog.setVisible(true);
+		
 	}
 
 }
