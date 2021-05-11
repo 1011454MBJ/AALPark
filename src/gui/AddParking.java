@@ -15,10 +15,14 @@ import javax.swing.JLabel;
 public class AddParking extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField carRegNoTxtField;
+	private JTextField carMakeTxtField;
+	private JTextField carModelTxtField;
+	private JTextField carFuelTypeTxtField;
+	private JTextField firstNameTxtField;
+	private JTextField lastNameTxtField;
+	private JTextField phoneNoTxtField;
+	private JTextField emailTxtField;
 
 	/**
 	 * Launch the application.
@@ -45,39 +49,79 @@ public class AddParking extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][grow][][][][][][][][][][][][][][][][][][][][][][][][158.00][158px]", "[][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][160.00][][][][][][][][][][][][][][][][][][][][][][][][158.00][158px]", "[][][][][][][][][][][][][][]"));
 		
-		JLabel regNoLbl = new JLabel("Nummerplade");
-		regNoLbl.setFont(new Font("Arial", Font.PLAIN, 18));
-		contentPane.add(regNoLbl, "cell 0 1");
+		JLabel carRegNoLbl = new JLabel("Nummerplade");
+		carRegNoLbl.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(carRegNoLbl, "cell 0 1,alignx right");
 		
-		textField = new JTextField();
-		contentPane.add(textField, "cell 2 1,growx");
-		textField.setColumns(10);
+		carRegNoTxtField = new JTextField();
+		carRegNoTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(carRegNoTxtField, "cell 2 1,growx");
+		carRegNoTxtField.setColumns(10);
 		
 		JLabel carMakeLbl = new JLabel("M\u00E6rke");
 		carMakeLbl.setFont(new Font("Arial", Font.PLAIN, 18));
-		contentPane.add(carMakeLbl, "cell 0 2");
+		contentPane.add(carMakeLbl, "cell 0 2,alignx right");
 		
-		textField_1 = new JTextField();
-		contentPane.add(textField_1, "cell 2 2,growx");
-		textField_1.setColumns(10);
+		carMakeTxtField = new JTextField();
+		carMakeTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(carMakeTxtField, "cell 2 2,growx");
+		carMakeTxtField.setColumns(10);
 		
 		JLabel carModelLbl = new JLabel("Model");
 		carModelLbl.setFont(new Font("Arial", Font.PLAIN, 18));
-		contentPane.add(carModelLbl, "cell 0 3");
+		contentPane.add(carModelLbl, "cell 0 3,alignx right");
 		
-		textField_2 = new JTextField();
-		contentPane.add(textField_2, "cell 2 3,growx");
-		textField_2.setColumns(10);
+		carModelTxtField = new JTextField();
+		carModelTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(carModelTxtField, "cell 2 3,growx");
+		carModelTxtField.setColumns(10);
 		
 		JLabel carFuelTypeLbl = new JLabel("Br\u00E6ndstoftype");
 		carFuelTypeLbl.setFont(new Font("Arial", Font.PLAIN, 18));
-		contentPane.add(carFuelTypeLbl, "cell 0 4");
+		contentPane.add(carFuelTypeLbl, "cell 0 4,alignx right");
 		
-		textField_3 = new JTextField();
-		contentPane.add(textField_3, "cell 2 4,growx");
-		textField_3.setColumns(10);
+		carFuelTypeTxtField = new JTextField();
+		carFuelTypeTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(carFuelTypeTxtField, "cell 2 4,growx");
+		carFuelTypeTxtField.setColumns(10);
+		
+		JLabel firstNameLbl = new JLabel("Fornavn");
+		firstNameLbl.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(firstNameLbl, "cell 0 7");
+		
+		firstNameTxtField = new JTextField();
+		firstNameTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(firstNameTxtField, "cell 2 7,growx");
+		firstNameTxtField.setColumns(10);
+		
+		JLabel lastNameLbl = new JLabel("Efternavn");
+		lastNameLbl.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(lastNameLbl, "cell 0 8");
+		
+		lastNameTxtField = new JTextField();
+		lastNameTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(lastNameTxtField, "cell 2 8,growx");
+		lastNameTxtField.setColumns(10);
+		
+		JLabel phoneNoLbl = new JLabel("Mobilnummer");
+		phoneNoLbl.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(phoneNoLbl, "cell 0 9");
+		
+		phoneNoTxtField = new JTextField();
+		phoneNoTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(phoneNoTxtField, "cell 2 9,growx");
+		phoneNoTxtField.setColumns(10);
+		
+		JLabel emailLbl = new JLabel("Mailadresse");
+		emailLbl.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(emailLbl, "cell 0 10");
+		
+		emailTxtField = new JTextField();
+		emailTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
+		contentPane.add(emailTxtField, "cell 2 10,growx");
+		emailTxtField.setColumns(10);
 		
 		JButton persistParkingBtn = new JButton("Opret parkering");
 		persistParkingBtn.setFont(new Font("Arial", Font.PLAIN, 18));
