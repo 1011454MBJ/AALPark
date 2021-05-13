@@ -33,7 +33,6 @@ public class AddParking extends JFrame {
 	private JTextField bayTxtField;
 	private JTextField departureDateTxtField;
 	private JTextField returnDateTxtField;
-	private JFrame addParkingFrame;
 
 	/**
 	 * Launch the application.
@@ -43,7 +42,7 @@ public class AddParking extends JFrame {
 			public void run() {
 				try {
 					AddParking frame = new AddParking();
-					frame.addParkingFrame.setVisible(true);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -58,19 +57,23 @@ public class AddParking extends JFrame {
 		initialize();
 	}
 	
+//	public void setVisible(Boolean b) {
+//		this.addParkingFrame.setVisible(b);
+//	}
+	
 	/**
 	 * Initialize contents of the frame.
 	 */	
 	private void initialize() {
-		addParkingFrame = new JFrame();
-		addParkingFrame.setTitle("Aalborg Lufthavns Parkeringsservice");
-		addParkingFrame.setIconImage(				
+		//addParkingFrame = new JFrame();
+		this.setTitle("Aalborg Lufthavns Parkeringsservice");
+		this.setIconImage(				
 				Toolkit.getDefaultToolkit().getImage(AddParking.class.getResource("/asset/AALlogo-schema.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addParkingFrame.setBounds(100, 100, 870, 475);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(100, 100, 870, 475);
 		parkingInfoPane = new JPanel();
 		parkingInfoPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		addParkingFrame.setContentPane(parkingInfoPane);
+		this.setContentPane(parkingInfoPane);
 		parkingInfoPane.setLayout(new MigLayout("", "[100px][102.00][][160.00,shrink 0][grow][][][27.00][][160.00,grow][160.00px]", "[][grow][][][][10.00][10.00][][][][][][][]"));
 		
 		JLabel carRegNoLbl = new JLabel("Nummerplade");

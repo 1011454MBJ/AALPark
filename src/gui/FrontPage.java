@@ -59,21 +59,25 @@ public class FrontPage extends JFrame {
 		frontPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frontPageFrame.setBounds(100, 100, 870, 475);
 		frontPagePane = new JPanel();
+		frontPagePane.setBackground(new Color(255, 255, 255));
 		frontPagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frontPageFrame.setContentPane(frontPagePane);
 		frontPagePane.setLayout(new MigLayout("", "[68.00][][][][][][grow][][][][][][][][][][][][][][][][][][][][]", "[grow][grow][][][][][][][][][][][][][][][][]"));
 		
 		JPanel backgroundPanel = new JPanel();
-		backgroundPanel.setBackground(Color.WHITE);
+		backgroundPanel.setForeground(new Color(0, 0, 102));
+		backgroundPanel.setBackground(new Color(255, 255, 255));
 		backgroundPanel.setBorder(new LineBorder(Color.BLACK, 2, true));
 		frontPagePane.add(backgroundPanel, "cell 0 0 4 18,grow");
 		backgroundPanel.setLayout(new MigLayout("", "[125px,grow]", "[85.00px,grow][23px][2px][23px][2px][23px][2px][23px][2px][23px][2px][23px][2px][23px][2px]"));
 		
 		JPanel topMenuPanel = new JPanel();
+		topMenuPanel.setBackground(new Color(255, 255, 255));
 		backgroundPanel.add(topMenuPanel, "cell 0 0,grow");
 		topMenuPanel.setLayout(new MigLayout("", "[]", "[]"));
 		
 		JButton registerNewParkingBtn = new JButton("Registrer parkering");
+		registerNewParkingBtn.setForeground(new Color(0, 0, 102));
 		registerNewParkingBtn.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				showNewParkingDialog();
@@ -83,71 +87,53 @@ public class FrontPage extends JFrame {
 		registerNewParkingBtn.setFont(new Font("Arial", Font.PLAIN, 16));
 		backgroundPanel.add(registerNewParkingBtn, "cell 0 1");
 		
-		JPanel firstSplitMenuPanel = new JPanel();
-		backgroundPanel.add(firstSplitMenuPanel, "cell 0 2,grow");
-		firstSplitMenuPanel.setLayout(new MigLayout("", "[]", "[]"));
-		
 		JButton searchParkingBtn = new JButton("S\u00F8g parkering");
+		searchParkingBtn.setForeground(new Color(0, 0, 102));
 		searchParkingBtn.setFont(new Font("Arial", Font.PLAIN, 16));
 		backgroundPanel.add(searchParkingBtn, "cell 0 3,growx");
 		
-		JPanel secondSplitMenuPanel = new JPanel();
-		backgroundPanel.add(secondSplitMenuPanel, "cell 0 4,grow");
-		secondSplitMenuPanel.setLayout(new MigLayout("", "[]", "[]"));
-		
 		JButton extendParkingBtn = new JButton("Forl\u00E6ng parkering");
+		extendParkingBtn.setForeground(new Color(0, 0, 102));
 		extendParkingBtn.setFont(new Font("Arial", Font.PLAIN, 16));
 		backgroundPanel.add(extendParkingBtn, "cell 0 5,growx");
 		
-		JPanel thirdSplitMenuPanel = new JPanel();
-		backgroundPanel.add(thirdSplitMenuPanel, "cell 0 6,grow");
-		thirdSplitMenuPanel.setLayout(new MigLayout("", "[]", "[]"));
-		
 		JButton endParkingBtn = new JButton("Afslut parkering");
+		endParkingBtn.setForeground(new Color(0, 0, 102));
 		endParkingBtn.setFont(new Font("Arial", Font.PLAIN, 16));
 		backgroundPanel.add(endParkingBtn, "cell 0 7,growx");
 		
-		JPanel fourthSplitMenuPanel = new JPanel();
-		backgroundPanel.add(fourthSplitMenuPanel, "cell 0 8,grow");
-		fourthSplitMenuPanel.setLayout(new MigLayout("", "[]", "[]"));
-		
 		JButton makeNewIssueBtn = new JButton("Opret ny h\u00E6ndelse");
+		makeNewIssueBtn.setForeground(new Color(0, 0, 102));
 		makeNewIssueBtn.setFont(new Font("Arial", Font.PLAIN, 16));
 		backgroundPanel.add(makeNewIssueBtn, "cell 0 9,growx");
 		
-		JPanel fifthSplitMenuPanel = new JPanel();
-		backgroundPanel.add(fifthSplitMenuPanel, "cell 0 10,grow");
-		fifthSplitMenuPanel.setLayout(new MigLayout("", "[]", "[]"));
-		
 		JButton serviceBtn = new JButton("Service");
+		serviceBtn.setForeground(new Color(0, 0, 102));
 		serviceBtn.setFont(new Font("Arial", Font.PLAIN, 16));
 		backgroundPanel.add(serviceBtn, "cell 0 11,growx");
 		
-		JPanel sixthSplitMenuPanel = new JPanel();
-		backgroundPanel.add(sixthSplitMenuPanel, "cell 0 12,grow");
-		sixthSplitMenuPanel.setLayout(new MigLayout("", "[]", "[]"));
-		
 		JButton helpBtn = new JButton("Hj\u00E6lp");
+		helpBtn.setForeground(new Color(0, 0, 102));
 		helpBtn.setFont(new Font("Arial", Font.PLAIN, 16));
 		backgroundPanel.add(helpBtn, "cell 0 13,growx,aligny top");
 		
 		JPanel bottomMenuPanel = new JPanel();
+		bottomMenuPanel.setBackground(new Color(255, 255, 255));
 		backgroundPanel.add(bottomMenuPanel, "cell 0 14,grow");
 		bottomMenuPanel.setLayout(new MigLayout("", "[]", "[]"));
-		helpBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
+				
 		JPanel welcomePanel = new JPanel();
+		welcomePanel.setBackground(new Color(255, 255, 255));
 		frontPagePane.add(welcomePanel, "cell 6 1 18 6,grow");
 		welcomePanel.setLayout(new MigLayout("", "[]", "[][][]"));
 		
 		JLabel frontPageGreetingLbl = new JLabel("Velkommen til Aalborg Lufthavns parkeringsservice");
+		frontPageGreetingLbl.setForeground(new Color(0, 0, 102));
 		welcomePanel.add(frontPageGreetingLbl, "cell 0 0");
 		frontPageGreetingLbl.setFont(new Font("Arial", Font.BOLD, 24));
 		
 		JLabel frontPageSubtitleLbl = new JLabel("Venligst registrere din parkering her");
+		frontPageSubtitleLbl.setForeground(new Color(0, 0, 102));
 		frontPageSubtitleLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		welcomePanel.add(frontPageSubtitleLbl, "cell 0 2");
 	}
