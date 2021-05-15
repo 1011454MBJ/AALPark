@@ -16,6 +16,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -255,15 +256,19 @@ public class AddParking extends JFrame {
 
 	private void findCar() {
 		try {
+			if(parkCon.getCar() == null) {
+				JOptionPane.showMessageDialog(carRegNoTxtField, "Nummerplade ikke fundet\nVenligst indtast oplysningerne manuelt");
+			} 
+			else {
 			parkCon.addCar(carRegNoTxtField.getText());
+			carMakeTxtField.setText(parkCon.getMake());
+			carModelTxtField.setText(parkCon.getModel());
+			carFuelTypeTxtField.setText(parkCon.getFuelType());
+			}
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		carMakeTxtField.setText(parkCon.getMake());
-		carModelTxtField.setText(parkCon.getModel());
-		carFuelTypeTxtField.setText(parkCon.getFuelType());
+		}		
 		
 	}
 
