@@ -32,7 +32,7 @@ public class FrontPage extends JFrame {
 			public void run() {
 				try {
 					FrontPage frame = new FrontPage();
-					frame.frontPageFrame.setVisible(true);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,16 +52,16 @@ public class FrontPage extends JFrame {
 	 */
 	private void initialize() {
 		
-		frontPageFrame = new JFrame();
-		frontPageFrame.setTitle("Aalborg Lufthavns Parkeringsservice");
-		frontPageFrame.setIconImage(
+		//frontPageFrame = new JFrame();
+		setTitle("Aalborg Lufthavns Parkeringsservice");
+		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(FrontPage.class.getResource("/asset/AALlogo-schema.png")));
-		frontPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frontPageFrame.setBounds(100, 100, 870, 475);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 870, 475);
 		frontPagePane = new JPanel();
 		frontPagePane.setBackground(new Color(255, 255, 255));
 		frontPagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frontPageFrame.setContentPane(frontPagePane);
+		setContentPane(frontPagePane);
 		frontPagePane.setLayout(new MigLayout("", "[68.00][][][][][][grow][][][][][][][][][][][][][][][][][][][][]", "[grow][grow][][][][][][][][][][][][][][][][]"));
 		
 		JPanel backgroundPanel = new JPanel();
@@ -80,7 +80,8 @@ public class FrontPage extends JFrame {
 		registerNewParkingBtn.setForeground(new Color(0, 0, 102));
 		registerNewParkingBtn.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
-				showNewParkingDialog();
+				//showNewParkingDialog();
+				showNewAddParking();
 			}
 		});
 		
@@ -142,6 +143,14 @@ public class FrontPage extends JFrame {
 	private void showNewParkingDialog() {
 		NewParkingDialog newParkingDialog = new NewParkingDialog();
 		newParkingDialog.setVisible(true);
+	}
+	
+
+	private void showNewAddParking() {
+		AddParking addParking = new AddParking();
+		addParking.setVisible(true);
+		setVisible(false);
+		dispose();
 		
 	}
 

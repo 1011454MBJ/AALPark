@@ -1,5 +1,8 @@
 package gui;
 
+import controller.*;
+import database.DataAccessException;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -15,6 +18,11 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AddParking extends JFrame {
 
@@ -33,6 +41,7 @@ public class AddParking extends JFrame {
 	private JTextField bayTxtField;
 	private JTextField departureDateTxtField;
 	private JTextField returnDateTxtField;
+	private ParkingController parkCon;
 
 	/**
 	 * Launch the application.
@@ -54,18 +63,22 @@ public class AddParking extends JFrame {
 	 * Create the frame.
 	 */
 	public AddParking() {
+		
 		initialize();
 	}
-	
-//	public void setVisible(Boolean b) {
-//		this.addParkingFrame.setVisible(b);
-//	}
 	
 	/**
 	 * Initialize contents of the frame.
 	 */	
 	private void initialize() {
-		//addParkingFrame = new JFrame();
+		try {
+			parkCon = new ParkingController();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		parkCon.createParking();
+		
 		this.setTitle("Aalborg Lufthavns Parkeringsservice");
 		this.setIconImage(				
 				Toolkit.getDefaultToolkit().getImage(AddParking.class.getResource("/asset/AALlogo-schema.png")));
@@ -81,6 +94,11 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carRegNoLbl, "cell 1 1,alignx right");
 		
 		carRegNoTxtField = new JTextField();
+		carRegNoTxtField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				findCar();
+			}
+		});
 		carRegNoTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carRegNoTxtField, "cell 3 1,growx");
 		carRegNoTxtField.setColumns(10);
@@ -216,9 +234,33 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(persistParkingBtn, "cell 9 13");
 		
 		JButton cancelBtn = new JButton("Afbryd");
+		cancelBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				returnToFrontPage();
+			}
+		});
 		cancelBtn.setBackground(new Color(255, 51, 0));
 		cancelBtn.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(cancelBtn, "cell 10 13,growx");
+	}
+
+	private void returnToFrontPage() {
+		FrontPage frontPage = new FrontPage();
+		frontPage.setVisible(true);
+		setVisible(false);
+		dispose();
+		
+	}
+
+	private void findCar() {
+		try {
+			parkCon.addCar(carRegNoTxtField.getText());
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
