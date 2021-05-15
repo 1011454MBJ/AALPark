@@ -32,8 +32,8 @@ public class ParkingController implements ParkingDBIF {
 		parking.addCarInformation(car);
 	}
 
-	public void addClientInformation(String firstName, String lastName, String phoneNo, String mail, 
-									String location, LocalDate returnDate) {
+	public void addClientInformation(String firstName, String lastName, String phoneNo, 
+									String mail, String location, LocalDate returnDate) {
 
 		client = clientController.createClient(firstName, lastName, phoneNo, mail);
 		parking.addClientInformation(client);
@@ -46,6 +46,21 @@ public class ParkingController implements ParkingDBIF {
 	public boolean saveParking(Parking parking) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public String getMake() {
+		// TODO Auto-generated method stub
+		return car.getMake();
+	}
+
+	public String getModel() {
+		// TODO Auto-generated method stub
+		return car.getModel();
+	}
+
+	public String getFuelType() {
+		// TODO Auto-generated method stub
+		return car.getFuelType();
 	}
 
 }

@@ -8,11 +8,12 @@ import model.*;
 
 public class MockMotorDB implements MotorRegisterDBIF {
 
-	private static final String findByRegNoQ = "select MockMake, MockModel, MockFuelType, MockRegNo from MockMotorregisteret where MockRegNo = ?";
+	private static final String findByRegNoQ = "select RegNo, Make, Model, FuelType from MockMotorregistret where RegNo = ?";
 	private PreparedStatement findByRegNo;
 	
 	public MockMotorDB() throws SQLException {
-		findByRegNo = DatabaseConnection.getInstance().getConnection().prepareStatement(findByRegNoQ);
+		findByRegNo = DatabaseConnection.getInstance()
+				.getConnection().prepareStatement(findByRegNoQ);
 	}
 	
 	@Override
@@ -32,8 +33,8 @@ public class MockMotorDB implements MotorRegisterDBIF {
 	}
 
 	private Car buildCar(ResultSet set) throws SQLException {
-		Car car = new Car(set.getString("MockMake"), set.getString("MockModel"), 
-				set.getString("MockFuelType"), set.getString("MockRegNo"));
+		Car car = new Car(set.getString("RegNo"), set.getString("Make"), 
+				set.getString("Model"), set.getString("FuelType"));
 		
 		return car;
 	}

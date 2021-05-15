@@ -7,7 +7,7 @@ public class Car {
 	private String regNo;
 	private String fuelType;
 	
-	public Car(String make, String model, String regNo, String fuelType) {
+	public Car(String regNo, String make, String model, String fuelType) {
 		
 		this.make = make;
 		this.model = model;

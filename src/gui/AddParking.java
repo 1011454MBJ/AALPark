@@ -261,6 +261,10 @@ public class AddParking extends JFrame {
 			e.printStackTrace();
 		}
 		
+		carMakeTxtField.setText(parkCon.getMake());
+		carModelTxtField.setText(parkCon.getModel());
+		carFuelTypeTxtField.setText(parkCon.getFuelType());
+		
 	}
 
 }
