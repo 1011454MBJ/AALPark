@@ -24,6 +24,8 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class AddParking extends JFrame {
 
@@ -122,6 +124,12 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carMakeLbl, "cell 1 2,alignx right");
 		
 		carMakeTxtField = new JTextField();
+		carMakeTxtField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				addCarInfoManualInput();
+			}
+		});
 		carMakeTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carMakeTxtField, "cell 3 2,growx");
 		carMakeTxtField.setColumns(10);
@@ -140,6 +148,12 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carModelLbl, "cell 1 3,alignx right");
 		
 		carModelTxtField = new JTextField();
+		carModelTxtField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				addCarInfoManualInput();
+			}
+		});
 		carModelTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carModelTxtField, "cell 3 3,growx");
 		carModelTxtField.setColumns(10);
@@ -158,6 +172,12 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carFuelTypeLbl, "cell 1 4,alignx right");
 		
 		carFuelTypeTxtField = new JTextField();
+		carFuelTypeTxtField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				addCarInfoManualInput();
+			}
+		});
 		carFuelTypeTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carFuelTypeTxtField, "cell 3 4,growx");
 		carFuelTypeTxtField.setColumns(10);
@@ -258,6 +278,7 @@ public class AddParking extends JFrame {
 		try {
 			if(parkCon.getCar() == null) {
 				JOptionPane.showMessageDialog(carRegNoTxtField, "Nummerplade ikke fundet\nVenligst indtast oplysningerne manuelt");
+				addCarInfoManualInput();
 			} 
 			else {
 			parkCon.addCar(carRegNoTxtField.getText());
@@ -270,6 +291,12 @@ public class AddParking extends JFrame {
 			e.printStackTrace();
 		}		
 		
+	}
+
+	private void addCarInfoManualInput() {
+		// TODO Auto-generated method stub
+		parkCon.addCar(carRegNoTxtField.getText(), carMakeTxtField.getText(), 
+				carModelTxtField.getText(), carFuelTypeTxtField.getText());
 	}
 
 }

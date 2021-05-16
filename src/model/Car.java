@@ -9,9 +9,9 @@ public class Car {
 	
 	public Car(String regNo, String make, String model, String fuelType) {
 		
+		this.regNo = regNo;
 		this.make = make;
 		this.model = model;
-		this.regNo = regNo;
 		this.fuelType = fuelType;
 		
 	}
@@ -44,32 +44,32 @@ public class Car {
 		return fuelType;
 	}	
 	
-//	/**
-//	 * @param make the make to set
-//	 */
-//	public void setMake(String make) {
-//		this.make = make;
-//	}
-//
-//	/**
-//	 * @param model the model to set
-//	 */
-//	public void setModel(String model) {
-//		this.model = model;
-//	}	
-//
+	/**
+	 * @param make the make to set
+	 */
+	public void setMake(String make) {
+		this.make = make;
+	}
+
+	/**
+	 * @param model the model to set
+	 */
+	public void setModel(String model) {
+		this.model = model;
+	}	
+
 //	/**
 //	 * @param regNo the regNo to set
 //	 */
 //	public void setRegNo(String regNo) {
 //		this.regNo = regNo;
 //	}
-//
-//	/**
-//	 * @param fuelType the fuelType to set
-//	 */
-//	public void setFuelType(String fuelType) {
-//		this.fuelType = fuelType;
-//	}
+
+	/**
+	 * @param fuelType the fuelType to set
+	 */
+	public void setFuelType(String fuelType) {
+		this.fuelType = fuelType;
+	}
 	
 }

@@ -19,4 +19,9 @@ public class CarController implements MotorRegisterDBIF {
 		return motorDB.findCarByRegistrationNo(regNo);
 	}
 
+	public Car createCar(String regNo, String make, String model, String fuelType) {
+		Car car = new Car(regNo, make, model, fuelType);
+		return car;
+		
+	}
 }

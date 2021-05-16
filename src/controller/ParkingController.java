@@ -31,6 +31,12 @@ public class ParkingController implements ParkingDBIF {
 		car = carController.findCarByRegistrationNo(regNo);
 		parking.addCarInformation(car);
 	}
+	
+	//Overloaded - same method - different input parameters
+	public void addCar(String regNo, String make, String model, String fuelType) {
+		car = carController.createCar(regNo, make, model, fuelType);
+		parking.addCarInformation(car);
+	}
 
 	public void addClientInformation(String firstName, String lastName, String phoneNo, 
 									String mail, String location, LocalDate returnDate) {
@@ -68,4 +74,22 @@ public class ParkingController implements ParkingDBIF {
 		return car;
 	}
 
+	public void setMake(String make) {
+		// TODO Auto-generated method stub
+		car.setMake(make);
+		parking.addCarInformation(car);
+	}
+
+	public void setModel(String model) {
+		// TODO Auto-generated method stub
+		car.setModel(model);
+		parking.addCarInformation(car);
+	}
+
+	public void setFuelType(String fuelType) {
+		// TODO Auto-generated method stub
+		car.setFuelType(fuelType);
+		parking.addCarInformation(car);
+	}
+	
 }
