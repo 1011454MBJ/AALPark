@@ -33,7 +33,7 @@ public class AddParking extends JFrame {
 	private JTextField carRegNoTxtField;
 	private JTextField carMakeTxtField;
 	private JTextField carModelTxtField;
-	private JTextField carFuelTypeTxtField;
+	private JComboBox carFuelTypeComboBox;
 	private JTextField firstNameTxtField;
 	private JTextField lastNameTxtField;
 	private JTextField phoneNoTxtField;
@@ -45,6 +45,7 @@ public class AddParking extends JFrame {
 	private JTextField departureDateTxtField;
 	private JTextField returnDateTxtField;
 	private ParkingController parkCon;
+	private String[] fuelTypeOptions = {"Benzin", "Diesel", "Elektrisk"};
 
 	/**
 	 * Launch the application.
@@ -124,12 +125,12 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carMakeLbl, "cell 1 2,alignx right");
 		
 		carMakeTxtField = new JTextField();
-		carMakeTxtField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				addCarInfoManualInput();
-			}
-		});
+//		carMakeTxtField.addFocusListener(new FocusAdapter() {
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//				parkCon.setMake(carMakeTxtField.getText());
+//			}
+//		});
 		carMakeTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carMakeTxtField, "cell 3 2,growx");
 		carMakeTxtField.setColumns(10);
@@ -148,12 +149,12 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carModelLbl, "cell 1 3,alignx right");
 		
 		carModelTxtField = new JTextField();
-		carModelTxtField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				addCarInfoManualInput();
-			}
-		});
+//		carModelTxtField.addFocusListener(new FocusAdapter() {
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//				parkCon.setModel(carModelTxtField.getText());
+//			}
+//		});
 		carModelTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carModelTxtField, "cell 3 3,growx");
 		carModelTxtField.setColumns(10);
@@ -171,16 +172,15 @@ public class AddParking extends JFrame {
 		carFuelTypeLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carFuelTypeLbl, "cell 1 4,alignx right");
 		
-		carFuelTypeTxtField = new JTextField();
-		carFuelTypeTxtField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				addCarInfoManualInput();
-			}
-		});
-		carFuelTypeTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
-		parkingInfoPane.add(carFuelTypeTxtField, "cell 3 4,growx");
-		carFuelTypeTxtField.setColumns(10);
+		carFuelTypeComboBox = new JComboBox(fuelTypeOptions);
+//		carFuelTypeComboBox.addFocusListener(new FocusAdapter() {
+//			@Override
+//			public void focusLost(FocusEvent e) {
+//				parkCon.setFuelType((String)carFuelTypeComboBox.getSelectedItem());
+//			}
+//		});
+		carFuelTypeComboBox.setFont(new Font("Arial", Font.PLAIN, 18));
+		parkingInfoPane.add(carFuelTypeComboBox, "cell 3 4,growx");
 		
 		JLabel bayLbl = new JLabel("B\u00E5s");
 		bayLbl.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -250,6 +250,13 @@ public class AddParking extends JFrame {
 		emailTxtField.setColumns(10);
 		
 		JButton persistParkingBtn = new JButton("Opret parkering");
+		persistParkingBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				saveParkingToDatabase();
+			}
+
+		});
 		persistParkingBtn.setBackground(new Color(0, 255, 204));
 		persistParkingBtn.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(persistParkingBtn, "cell 9 13");
@@ -278,13 +285,13 @@ public class AddParking extends JFrame {
 		try {
 			if(parkCon.getCar() == null) {
 				JOptionPane.showMessageDialog(carRegNoTxtField, "Nummerplade ikke fundet\nVenligst indtast oplysningerne manuelt");
-				addCarInfoManualInput();
+				//addCarInfoManualInput();
 			} 
 			else {
-			parkCon.addCar(carRegNoTxtField.getText());
-			carMakeTxtField.setText(parkCon.getMake());
-			carModelTxtField.setText(parkCon.getModel());
-			carFuelTypeTxtField.setText(parkCon.getFuelType());
+				parkCon.addCar(carRegNoTxtField.getText());
+				carMakeTxtField.setText(parkCon.getMake());
+				carModelTxtField.setText(parkCon.getModel());
+				carFuelTypeComboBox.setSelectedItem(parkCon.getFuelType());
 			}
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
@@ -293,10 +300,22 @@ public class AddParking extends JFrame {
 		
 	}
 
-	private void addCarInfoManualInput() {
+//	private void addCarInfoManualInput() {
+//		// TODO Auto-generated method stub
+//		parkCon.addCar(carRegNoTxtField.getText(), carMakeTxtField.getText(), 
+//				carModelTxtField.getText(), (String)carFuelTypeComboBox.getSelectedItem());
+//	}
+	
+
+	private boolean saveParkingToDatabase() {
 		// TODO Auto-generated method stub
-		parkCon.addCar(carRegNoTxtField.getText(), carMakeTxtField.getText(), 
-				carModelTxtField.getText(), carFuelTypeTxtField.getText());
+		parkCon.addClientInformation(firstNameTxtField.getText(), lastNameTxtField.getText(),
+				phoneNoTxtField.getText(), emailTxtField.getText(),
+				lotTxtField.getText() + " " +rowTxtField.getText() + " " + 
+				bayTxtField.getText(), departureDateTxtField.getText(),				
+				returnDateTxtField.getText());
+		parkCon.saveParking();
+		return false;
 	}
 
 }

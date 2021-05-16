@@ -39,17 +39,21 @@ public class ParkingController implements ParkingDBIF {
 	}
 
 	public void addClientInformation(String firstName, String lastName, String phoneNo, 
-									String mail, String location, LocalDate returnDate) {
+									String mail, String location, String departureDate,
+									String returnDate) {
 
 		client = clientController.createClient(firstName, lastName, phoneNo, mail);
 		parking.addClientInformation(client);
 		parking.setLocation(location);
-		parking.setReturnDate(returnDate);
+		LocalDate departDate = LocalDate.parse(departureDate);
+		LocalDate dueBackDate = LocalDate.parse(returnDate);
+		parking.setDepartureDate(departDate);
+		parking.setReturnDate(dueBackDate);
 
 	}
 
 	@Override
-	public boolean saveParking(Parking parking) {
+	public boolean saveParking() {//Parking parking) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -90,6 +94,12 @@ public class ParkingController implements ParkingDBIF {
 		// TODO Auto-generated method stub
 		car.setFuelType(fuelType);
 		parking.addCarInformation(car);
+	}
+
+	@Override
+	public boolean saveParking(Parking parking) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

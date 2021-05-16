@@ -4,5 +4,7 @@ import model.Parking;
 
 public interface ParkingDBIF {
 
-	public boolean saveParking(Parking parking);
+	boolean saveParking(Parking parking);
+
+	boolean saveParking();
 }

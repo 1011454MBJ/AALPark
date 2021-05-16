@@ -10,4 +10,10 @@ public class ParkingDB implements ParkingDBIF {
 		return false;
 	}
 
+	@Override
+	public boolean saveParking() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -82,13 +82,13 @@ public class Parking {
 		this.returnDate = returnDate;
 	}
 
-//	/**
-//	 * @param departureDate making the departure date future proved
-//	 */
-//	public void setDepartureDate(LocalDate departureDate) {
-//		this.departureDate = departureDate;
-//	}
-//	
+	/**
+	 * @param departureDate making the departure date future proved
+	 */
+	public void setDepartureDate(LocalDate departureDate) {
+		this.departureDate = departureDate;
+	}
+	
 	
 
 }
