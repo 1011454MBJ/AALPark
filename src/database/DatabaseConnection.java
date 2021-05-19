@@ -15,7 +15,6 @@ public class DatabaseConnection {
 	private static final String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	private static final String dbName = "dmaa0920_1011454";
 	private static final String serverAddress = "hildur.ucn.dk";
-	//private static final String serverAddress = "192.168.56.2";
 	private static final int    serverPort = 1433;
 	private static final String userName = "dmaa0920_1011454";
 	private static final String password = "Password1!";

@@ -53,9 +53,9 @@ public class ParkingController implements ParkingDBIF {
 	}
 
 	@Override
-	public boolean saveParking() {//Parking parking) {
+	public boolean saveParking() {
 		// TODO Auto-generated method stub
-		return false;
+		return parkDB.saveParking(parking);
 	}
 
 	public String getMake() {
