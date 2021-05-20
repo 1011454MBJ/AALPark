@@ -8,10 +8,15 @@ import model.*;
 
 public class MockMotorDB implements MotorRegisterDBIF {
 
-	private static final String findByRegNoQ = "select RegNo, Make, Model, FuelType from MockMotorregistret where RegNo = ?";
+	private static final String findByRegNoQ = "select RegNo, Make, Model, FuelType "
+			+ "from MockMotorregistret where RegNo = ?";
 	private PreparedStatement findByRegNo;
 	
 	public MockMotorDB() throws SQLException {
+		init();
+	}
+	
+	private void init() throws SQLException {
 		findByRegNo = DatabaseConnection.getInstance()
 				.getConnection().prepareStatement(findByRegNoQ);
 	}

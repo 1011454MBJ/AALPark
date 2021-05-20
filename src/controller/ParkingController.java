@@ -39,11 +39,13 @@ public class ParkingController implements ParkingDBIF {
 	}
 
 	public void addClientInformation(String firstName, String lastName, String phoneNo, 
-									String mail, String location, String departureDate,
-									String returnDate) {
+									String mail, String lot, String row, String bay, 
+									String departureDate, String returnDate) throws DataAccessException {
 
 		client = clientController.createClient(firstName, lastName, phoneNo, mail);
 		parking.addClientInformation(client);
+		int location = findBayByID(lot, row, bay);
+		
 		parking.setLocation(location);
 		LocalDate departDate = LocalDate.parse(departureDate);
 		LocalDate dueBackDate = LocalDate.parse(returnDate);
@@ -100,6 +102,12 @@ public class ParkingController implements ParkingDBIF {
 	public boolean saveParking(Parking parking) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public int findBayByID(String lot, String row, String bay) throws DataAccessException {
+		// TODO Auto-generated method stub
+		return parkDB.findBayByID(lot, row, bay);
 	}
 	
 }

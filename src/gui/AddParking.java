@@ -309,11 +309,16 @@ public class AddParking extends JFrame {
 
 	private boolean saveParkingToDatabase() {
 		// TODO Auto-generated method stub
-		parkCon.addClientInformation(firstNameTxtField.getText(), lastNameTxtField.getText(),
-				phoneNoTxtField.getText(), emailTxtField.getText(),
-				lotTxtField.getText() + " " +rowTxtField.getText() + " " + 
-				bayTxtField.getText(), departureDateTxtField.getText(),				
-				returnDateTxtField.getText());
+		try {
+			parkCon.addClientInformation(firstNameTxtField.getText(), lastNameTxtField.getText(),
+					phoneNoTxtField.getText(), emailTxtField.getText(),
+					lotTxtField.getText(), rowTxtField.getText(), 
+					bayTxtField.getText(), departureDateTxtField.getText(),				
+					returnDateTxtField.getText());
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		parkCon.saveParking();
 		return false;
 	}

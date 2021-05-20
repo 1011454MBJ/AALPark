@@ -6,7 +6,7 @@ public class Parking {
 	
 	private Car car;
 	private Client client;
-	private String location;
+	private int location;
 	private LocalDate returnDate;
 	private LocalDate departureDate;
 	
@@ -14,7 +14,7 @@ public class Parking {
 		
 		car = null;
 		client = null;
-		location = null;
+		location = 0;
 		returnDate = null;
 		departureDate = null;
 	}
@@ -36,7 +36,7 @@ public class Parking {
 	/**
 	 * @return the location car is parked at
 	 */
-	public String getLocation() {
+	public int getLocation() {
 		return location;
 	}
 
@@ -69,9 +69,9 @@ public class Parking {
 	}
 
 	/**
-	 * @param location moving car to a new location
+	 * @param location2 moving car to a new location
 	 */
-	public void setLocation(String location) {
+	public void setLocation(int location) {
 		this.location = location;
 	}
 
