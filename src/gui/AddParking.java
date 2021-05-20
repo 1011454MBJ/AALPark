@@ -319,8 +319,7 @@ public class AddParking extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		parkCon.saveParking();
-		return false;
+		return parkCon.saveParking();
 	}
 
 }

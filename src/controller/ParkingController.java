@@ -54,10 +54,14 @@ public class ParkingController implements ParkingDBIF {
 
 	}
 
-	@Override
 	public boolean saveParking() {
 		// TODO Auto-generated method stub
-		return parkDB.saveParking(parking);
+		try {
+			return saveParking(parking);
+		} catch (DataAccessException | SQLException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
 	}
 
 	public String getMake() {
@@ -99,15 +103,15 @@ public class ParkingController implements ParkingDBIF {
 	}
 
 	@Override
-	public boolean saveParking(Parking parking) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public int findBayByID(String lot, String row, String bay) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return parkDB.findBayByID(lot, row, bay);
+	}
+
+	@Override
+	public boolean saveParking(Parking parking) throws DataAccessException, SQLException {
+		// TODO Auto-generated method stub
+		return parkDB.saveParking(parking);
 	}
 	
 }
