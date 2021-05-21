@@ -61,37 +61,42 @@ public class ParkingDB implements ParkingDBIF {
 	@Override
 	public boolean saveParking(Parking parking) throws DataAccessException, SQLException {
 		// TODO Auto-generated method stub
+		//int insertedRows = 0;
+		boolean insert = false;
 		try {
 			DatabaseConnection.getInstance().startTransaction();
-//	insert into Parking (int, localdate, localdate, int) "
-//					+ "values (5?, 6?CAST(N'2018-01-15' AS Date), 
-//		7?CAST(N'2018-01-23' AS Date), (SELECT ID FROM Car WHERE RegistrationNo = 8?)) \r\n"
-//	insert into Client (string, string, string, string, int PaymentTerms, "
-//					+ "int) values (9?, 10?, 11?, 12?,13?,14?)";
+
 			insertParkingNoService.setString(1, parking.getCar().getRegNo());
 			insertParkingNoService.setString(2, parking.getCar().getMake());
 			insertParkingNoService.setString(3, parking.getCar().getModel());
 			insertParkingNoService.setString(4, parking.getCar().getFuelType());
+			
 			insertParkingNoService.setInt(5,parking.getLocation());
-			//Insert depart
-			//insert return
+			insertParkingNoService.setDate(6, java.sql.Date.valueOf(parking.getDepartureDate()));
+			insertParkingNoService.setDate(7, java.sql.Date.valueOf(parking.getReturnDate()));
 			insertParkingNoService.setString(8, parking.getCar().getRegNo());
+			
 			insertParkingNoService.setString(9, parking.getClient().getMail());
 			insertParkingNoService.setString(10, parking.getClient().getFirstName());
 			insertParkingNoService.setString(11, parking.getClient().getLastName());
 			insertParkingNoService.setString(12, parking.getClient().getPhoneNo());
-			//preset to credit card payment. To fixed when End parking is being done
+			//preset to credit card payment. To be reviewed when End parking is being done
 			insertParkingNoService.setInt(13, 1); 
 			insertParkingNoService.setString(14, parking.getCar().getRegNo());
 			
 			insertParkingNoService.executeUpdate();
 			DatabaseConnection.getInstance().commitTransaction();
 			
+			ResultSet rs = insertParkingNoService.getGeneratedKeys();
+			if (rs.next()) {
+				insert = true;
+			}
+			
 		} catch  (SQLException e) {
 			DatabaseConnection.getInstance().rollbackTransaction();
 			throw new DataAccessException(e, "Parkeringen kunne ikke gemmes");
 		}
-		return false;
+		return insert;
 	}
 	
 }

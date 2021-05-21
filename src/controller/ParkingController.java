@@ -78,7 +78,7 @@ public class ParkingController implements ParkingDBIF {
 		// TODO Auto-generated method stub
 		return car.getFuelType();
 	}
-
+	
 	public Car getCar() {
 		// TODO Auto-generated method stub
 		return car;

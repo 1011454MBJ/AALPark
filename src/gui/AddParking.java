@@ -283,12 +283,12 @@ public class AddParking extends JFrame {
 
 	private void findCar() {
 		try {
+			parkCon.addCar(carRegNoTxtField.getText());
 			if(parkCon.getCar() == null) {
 				JOptionPane.showMessageDialog(carRegNoTxtField, "Nummerplade ikke fundet\nVenligst indtast oplysningerne manuelt");
 				//addCarInfoManualInput();
 			} 
 			else {
-				parkCon.addCar(carRegNoTxtField.getText());
 				carMakeTxtField.setText(parkCon.getMake());
 				carModelTxtField.setText(parkCon.getModel());
 				carFuelTypeComboBox.setSelectedItem(parkCon.getFuelType());
