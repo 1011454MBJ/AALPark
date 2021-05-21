@@ -253,7 +253,12 @@ public class AddParking extends JFrame {
 		persistParkingBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				saveParkingToDatabase();
+				try {
+					saveParkingToDatabase();
+				} catch (DataAccessException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 		});
@@ -271,6 +276,9 @@ public class AddParking extends JFrame {
 		cancelBtn.setBackground(new Color(255, 51, 0));
 		cancelBtn.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(cancelBtn, "cell 10 13,growx");
+		
+		
+		debugData();
 	}
 
 	private void returnToFrontPage() {
@@ -300,14 +308,7 @@ public class AddParking extends JFrame {
 		
 	}
 
-//	private void addCarInfoManualInput() {
-//		// TODO Auto-generated method stub
-//		parkCon.addCar(carRegNoTxtField.getText(), carMakeTxtField.getText(), 
-//				carModelTxtField.getText(), (String)carFuelTypeComboBox.getSelectedItem());
-//	}
-	
-
-	private boolean saveParkingToDatabase() {
+	private int saveParkingToDatabase() throws DataAccessException, SQLException {
 		// TODO Auto-generated method stub
 		try {
 			parkCon.addClientInformation(firstNameTxtField.getText(), lastNameTxtField.getText(),
@@ -320,6 +321,23 @@ public class AddParking extends JFrame {
 			e.printStackTrace();
 		}
 		return parkCon.saveParking();
+	}
+	
+	private void debugData() {
+		carRegNoTxtField.setText("BE12345");
+		findCar();
+		carMakeTxtField.setText(parkCon.getMake());
+		carModelTxtField.setText(parkCon.getModel());
+		carFuelTypeComboBox.setSelectedItem(parkCon.getFuelType());
+		firstNameTxtField.setText("pølse"); 
+		lastNameTxtField.setText("mix");
+		phoneNoTxtField.setText("12345678"); 
+		emailTxtField.setText("ja@nej.dk");
+		lotTxtField.setText("P1");
+		rowTxtField.setText("A"); 
+		bayTxtField.setText("1"); 
+		departureDateTxtField.setText("2020-12-12");				
+		returnDateTxtField.setText("2020-12-12");
 	}
 
 }

@@ -18,13 +18,17 @@ public class ParkingDB implements ParkingDBIF {
 			+ "     and Row.Row = ?\r\n"
 			+ "	 and Bay.Number = ?";
 	private PreparedStatement findBayByID;
-	private static final String insertParkingNoServiceQ = "insert into Car (RegistrationNo, "
-			+ "Make, Model, FuelType) values(?, ?, ?, ?) \r\n"
-			+ "insert into Parking (Location_FK, DepartureDate, ReturnDate, Car_FK) "
-			+ "values (?, ?CAST(N'2018-01-15' AS Date), ?CAST(N'2018-01-23' AS Date), (SELECT ID FROM Car WHERE RegistrationNo = ?)) \r\n"
-			+ "insert into Client (Mail, FirstName, LastName, PhoneNo, PaymentTerms, "
-			+ "ClientCar_FK) values (?, ?, ?, ?, ?, (SELECT ID FROM Car WHERE RegistrationNo = ?))";
-	private PreparedStatement insertParkingNoService;
+	private static final String findCarQ = "select top 1 id from Car where RegistrationNo = ? order by id desc";
+	private static final String insertCarQ = "insert into Car (RegistrationNo, "
+			+ "Make, Model, FuelType) values(?, ?, ?, ?); \r\n";
+	private static final String insertParkingQ = "insert into Parking (Location_FK, DepartureDate, ReturnDate, Car_FK) "
+			+ "values (?, ?, ?, ?); \r\n";
+	private static final String insertClientQ = "insert into Client (Mail, FirstName, LastName, PhoneNo, PaymentTerms, "
+			+ "ClientCar_FK) values (?, ?, ?, ?, ?, ?)";
+	private PreparedStatement findCar;
+	private PreparedStatement insertCar;
+	private PreparedStatement insertParking;
+	private PreparedStatement insertClient;
 	
 	public ParkingDB() throws SQLException {
 		init();
@@ -33,8 +37,14 @@ public class ParkingDB implements ParkingDBIF {
 	private void init() throws SQLException {
 		findBayByID = DatabaseConnection.getInstance()
 				.getConnection().prepareStatement(findBayByIDQ);
-		insertParkingNoService = DatabaseConnection.getInstance()
-				.getConnection().prepareStatement(insertParkingNoServiceQ);
+		findCar = DatabaseConnection.getInstance().getConnection().prepareStatement(findCarQ);
+		insertCar = DatabaseConnection.getInstance()
+				.getConnection().prepareStatement(insertCarQ);
+		insertParking = DatabaseConnection.getInstance()
+				.getConnection().prepareStatement(insertParkingQ);
+		insertClient = DatabaseConnection.getInstance()
+				.getConnection().prepareStatement(insertClientQ);
+				
 	}
 
 	@Override
@@ -50,51 +60,64 @@ public class ParkingDB implements ParkingDBIF {
 			int location = -1;
 			
 			if (set.next()) {
-				location = set.getInt(location);
+				location = set.getInt(1);
 			}
 			return location;
 		} catch (SQLException e) {
-			throw new DataAccessException(e, "The bay: " + lot + " " + row + " " + bay + " was not found");
+			throw new DataAccessException(e, "The bay: " + lot + " " + row + " " + bay + " was not found " + e.getMessage());
 		}
 	}
 
 	@Override
-	public boolean saveParking(Parking parking) throws DataAccessException, SQLException {
+	public int saveParking(Parking parking) throws DataAccessException, SQLException {
 		// TODO Auto-generated method stub
-		//int insertedRows = 0;
-		boolean insert = false;
+		int insert = 0;
+		//boolean insert = false;
 		try {
 			DatabaseConnection.getInstance().startTransaction();
-
-			insertParkingNoService.setString(1, parking.getCar().getRegNo());
-			insertParkingNoService.setString(2, parking.getCar().getMake());
-			insertParkingNoService.setString(3, parking.getCar().getModel());
-			insertParkingNoService.setString(4, parking.getCar().getFuelType());
-			
-			insertParkingNoService.setInt(5,parking.getLocation());
-			insertParkingNoService.setDate(6, java.sql.Date.valueOf(parking.getDepartureDate()));
-			insertParkingNoService.setDate(7, java.sql.Date.valueOf(parking.getReturnDate()));
-			insertParkingNoService.setString(8, parking.getCar().getRegNo());
-			
-			insertParkingNoService.setString(9, parking.getClient().getMail());
-			insertParkingNoService.setString(10, parking.getClient().getFirstName());
-			insertParkingNoService.setString(11, parking.getClient().getLastName());
-			insertParkingNoService.setString(12, parking.getClient().getPhoneNo());
-			//preset to credit card payment. To be reviewed when End parking is being done
-			insertParkingNoService.setInt(13, 1); 
-			insertParkingNoService.setString(14, parking.getCar().getRegNo());
-			
-			insertParkingNoService.executeUpdate();
-			DatabaseConnection.getInstance().commitTransaction();
-			
-			ResultSet rs = insertParkingNoService.getGeneratedKeys();
-			if (rs.next()) {
-				insert = true;
+			findCar.setString(1,  parking.getCar().getRegNo());
+			ResultSet carSet = findCar.executeQuery();
+			int carId = -1;
+			if (carSet.next()) {
+				carId = carSet.getInt(1);
 			}
+			else {
+				insertCar.setString(1, parking.getCar().getRegNo());
+				insertCar.setString(2, parking.getCar().getMake());
+				insertCar.setString(3, parking.getCar().getModel());
+				insertCar.setString(4, parking.getCar().getFuelType());
+				insertCar.executeUpdate();
+				ResultSet rs = insertCar.getGeneratedKeys();
+				if (rs.next()) {
+					carId = rs.getInt(1);
+				}
+			}
+
+			insertParking.setInt(1,parking.getLocation());
+			insertParking.setDate(2, java.sql.Date.valueOf(parking.getDepartureDate()));
+			insertParking.setDate(3, java.sql.Date.valueOf(parking.getReturnDate()));
+			insertParking.setInt(4, carId);
+			
+			insertClient.setString(1, parking.getClient().getMail());
+			insertClient.setString(2, parking.getClient().getFirstName());
+			insertClient.setString(3, parking.getClient().getLastName());
+			insertClient.setString(4, parking.getClient().getPhoneNo());
+			//preset to credit card payment. To be reviewed when End parking is being done
+			insertClient.setInt(5, 1); 
+			insertClient.setInt(6, carId);
+			
+			insertParking.executeUpdate();
+			insertClient.executeUpdate();
+			
+			ResultSet parkSet = insertParking.getGeneratedKeys();
+			if (parkSet.next()) {
+				insert = parkSet.getInt(1);
+			}
+			DatabaseConnection.getInstance().commitTransaction();
 			
 		} catch  (SQLException e) {
 			DatabaseConnection.getInstance().rollbackTransaction();
-			throw new DataAccessException(e, "Parkeringen kunne ikke gemmes");
+			throw new DataAccessException(e, "Parkeringen kunne ikke gemmes" + e.getMessage());
 		}
 		return insert;
 	}
