@@ -254,7 +254,11 @@ public class AddParking extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				try {
-					saveParkingToDatabase();
+					if (saveParkingToDatabase() > 0) {
+						JOptionPane.showMessageDialog(carModelTxtField, "Din parkering er nu gemt");
+					} else {
+						JOptionPane.showMessageDialog(carModelTxtField, "Din parkering er ikke gemt");
+					};
 				} catch (DataAccessException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

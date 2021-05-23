@@ -72,7 +72,7 @@ public class ParkingDB implements ParkingDBIF {
 	@Override
 	public int saveParking(Parking parking) throws DataAccessException, SQLException {
 		// TODO Auto-generated method stub
-		int insert = 0;
+		int insert = -1;
 		// boolean insert = false;
 		try {
 			DatabaseConnection.getInstance().startTransaction();
