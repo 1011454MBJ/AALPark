@@ -9,24 +9,34 @@ import model.Parking;
 
 public class ParkingDB implements ParkingDBIF {
 
-	private static final String findBayByIDQ = "select Bay.ID\r\n" + "  from Bay\r\n" + "  join Row\r\n"
-			+ "    on Row.ID = Bay.Row_FK\r\n" + "  join ParkingLot\r\n" + "    on ParkingLot.ID = Row.Lot_FK\r\n"
-			+ "  where ParkingLot.Name = ?\r\n" + "     and Row.Row = ?\r\n" + "	 and Bay.Number = ?";
+	private static final String findBayByIDQ = "select Bay.ID\r\n" + "  from Bay\r\n" 
+			+ "  join Row\r\n" + "    on Row.ID = Bay.Row_FK\r\n" 
+			+ "  join ParkingLot\r\n" + "    on ParkingLot.ID = Row.Lot_FK\r\n"
+			+ "  where ParkingLot.Name = ?\r\n" + "     and Row.Row = ?\r\n" 
+			+ "	 and Bay.Number = ?";
 	private PreparedStatement findBayByID;
-	private static final String findCarQ = "select top 1 id from Car where RegistrationNo = ? order by id desc";
-	private static final String findClientQ = "select top 1 id from Client where mail = ? order by id desc";
+	private static final String findCarQ = "select top 1 id from Car " 
+			+ "where RegistrationNo = ? order by id desc";
+	private PreparedStatement findCar;
+	private static final String findClientQ = "select top 1 id from Client " 
+			+ "where mail = ? order by id desc";
+	private PreparedStatement findClient;
 	private static final String insertCarQ = "insert into Car (RegistrationNo, "
 			+ "Make, Model, FuelType) values(?, ?, ?, ?); \r\n";
-	private static final String insertParkingQ = "insert into Parking (Location_FK, DepartureDate, ReturnDate, Car_FK) "
-			+ "values (?, ?, ?, ?); \r\n";
-	private static final String insertClientQ = "insert into Client (Mail, FirstName, LastName, PhoneNo, PaymentTerms, "
-			+ "ClientCar_FK) values (?, ?, ?, ?, ?, ?)";
-	private PreparedStatement findCar;
-	private PreparedStatement findClient;
 	private PreparedStatement insertCar;
-	private PreparedStatement insertParking;
+	private static final String insertClientQ = "insert into Client " 
+			+ "(Mail, FirstName, LastName, PhoneNo, PaymentTerms, "
+			+ "ClientCar_FK) values (?, ?, ?, ?, ?, ?)";
 	private PreparedStatement insertClient;
-
+	private static final String insertParkingQ = "insert into Parking " 
+			+ "(Location_FK, DepartureDate, ReturnDate, Car_FK) "
+			+ "values (?, ?, ?, ?); \r\n";
+	private PreparedStatement insertParking;
+	private static final String retrieveParkingIDQ = "select top 1 Parking.ParkingID " 
+			+ "from Parking where car_FK = (select top 1 id from Car " 
+			+ "where RegistrationNo = ? order by id desc) order by ParkingID desc;";
+	private PreparedStatement retrivalParkingID;
+	
 	public ParkingDB() throws SQLException {
 		init();
 	}
@@ -44,6 +54,8 @@ public class ParkingDB implements ParkingDBIF {
 				.prepareStatement(insertParkingQ, Statement.RETURN_GENERATED_KEYS);
 		insertClient = DatabaseConnection.getInstance().getConnection()
 				.prepareStatement(insertClientQ, Statement.RETURN_GENERATED_KEYS);
+		retrivalParkingID = DatabaseConnection.getInstance().getConnection()
+				.prepareStatement(retrieveParkingIDQ);
 
 	}
 
@@ -144,6 +156,18 @@ public class ParkingDB implements ParkingDBIF {
 			}
 		}
 		return carID;
+	}
+	
+	@Override
+	public int getParkingID(String regNo) throws SQLException {
+		int parkingID = -1;
+		retrivalParkingID.setString(1, regNo);
+		ResultSet parkingSet = retrivalParkingID.executeQuery();
+		if (parkingSet.next()) {
+			parkingID = parkingSet.getInt(1);
+		}
+		return parkingID;
+		
 	}
 
 }

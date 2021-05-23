@@ -55,60 +55,65 @@ public class ParkingController implements ParkingDBIF {
 	}
 
 	public int saveParking() throws DataAccessException, SQLException {
-		// TODO Auto-generated method stub
-
+		
 			return saveParking(parking);
 	
 	}
 
 	public String getMake() {
-		// TODO Auto-generated method stub
+		
 		return car.getMake();
 	}
 
 	public String getModel() {
-		// TODO Auto-generated method stub
+		
 		return car.getModel();
 	}
 
 	public String getFuelType() {
-		// TODO Auto-generated method stub
+		
 		return car.getFuelType();
 	}
 	
 	public Car getCar() {
-		// TODO Auto-generated method stub
+		
 		return car;
 	}
 
 	public void setMake(String make) {
-		// TODO Auto-generated method stub
+		
 		car.setMake(make);
 		parking.addCarInformation(car);
 	}
 
 	public void setModel(String model) {
-		// TODO Auto-generated method stub
+		
 		car.setModel(model);
 		parking.addCarInformation(car);
 	}
 
 	public void setFuelType(String fuelType) {
-		// TODO Auto-generated method stub
+		
 		car.setFuelType(fuelType);
 		parking.addCarInformation(car);
 	}
 
 	@Override
 	public int findBayByID(String lot, String row, String bay) throws DataAccessException {
-		// TODO Auto-generated method stub
+		
 		return parkDB.findBayByID(lot, row, bay);
 	}
 
 	@Override
 	public int saveParking(Parking parking) throws DataAccessException, SQLException {
-		// TODO Auto-generated method stub
+		
 		return parkDB.saveParking(parking);
+	}
+
+	@Override
+	public int getParkingID(String regNo) throws SQLException {
+		// TODO Auto-generated method stub
+		return parkDB.getParkingID(regNo);
 	}
 	
 }
