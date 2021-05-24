@@ -133,7 +133,7 @@ public class FrontPage extends JFrame {
 		welcomePanel.add(frontPageGreetingLbl, "cell 0 0");
 		frontPageGreetingLbl.setFont(new Font("Arial", Font.BOLD, 24));
 		
-		JLabel frontPageSubtitleLbl = new JLabel("Venligst registrere din parkering her");
+		JLabel frontPageSubtitleLbl = new JLabel("Venligst registrer din parkering her");
 		frontPageSubtitleLbl.setForeground(new Color(0, 0, 102));
 		frontPageSubtitleLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		welcomePanel.add(frontPageSubtitleLbl, "cell 0 2");

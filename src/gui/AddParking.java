@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JCheckBox;
 
 public class AddParking extends JFrame {
 
@@ -38,7 +39,6 @@ public class AddParking extends JFrame {
 	private JTextField lastNameTxtField;
 	private JTextField phoneNoTxtField;
 	private JTextField emailTxtField;
-	private JTextField parkIDTxtField;
 	private JTextField lotTxtField;
 	private JTextField rowTxtField;
 	private JTextField bayTxtField;
@@ -101,8 +101,6 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carRegNoLbl, "cell 1 1,alignx right");
 
 		carRegNoTxtField = new JTextField();
-		// carRegNoTxtField.addActionListener(new ActionListener() {
-		// public void actionPerformed(ActionEvent e) {
 		carRegNoTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -117,26 +115,20 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(panel, "cell 4 1,grow");
 		panel.setLayout(new MigLayout("", "[]", "[]"));
 
-		JLabel parkIDLbl = new JLabel("ParkeringsID");
-		parkIDLbl.setFont(new Font("Arial", Font.PLAIN, 18));
-		parkingInfoPane.add(parkIDLbl, "cell 5 1 3 1,alignx right,aligny baseline");
-
-		parkIDTxtField = new JTextField();
-		parkIDTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
-		parkingInfoPane.add(parkIDTxtField, "cell 9 1,growx");
-		parkIDTxtField.setColumns(10);
+		JLabel extraServiceAddOnLbl = new JLabel("Ekstra service");
+		extraServiceAddOnLbl.setFont(new Font("Arial", Font.PLAIN, 18));
+		parkingInfoPane.add(extraServiceAddOnLbl, "cell 5 1 3 1,alignx right,aligny baseline");
+		
+		JCheckBox chargerChckBox = new JCheckBox("Book ladestander");
+		chargerChckBox.setFont(new Font("Arial", Font.PLAIN, 18));
+		chargerChckBox.setEnabled(false);
+		parkingInfoPane.add(chargerChckBox, "cell 9 1");
 
 		JLabel carMakeLbl = new JLabel("M\u00E6rke");
 		carMakeLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carMakeLbl, "cell 1 2,alignx right");
 
 		carMakeTxtField = new JTextField();
-//		carMakeTxtField.addFocusListener(new FocusAdapter() {
-//			@Override
-//			public void focusLost(FocusEvent e) {
-//				parkCon.setMake(carMakeTxtField.getText());
-//			}
-//		});
 		carMakeTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carMakeTxtField, "cell 3 2,growx");
 		carMakeTxtField.setColumns(10);
@@ -155,12 +147,6 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carModelLbl, "cell 1 3,alignx right");
 
 		carModelTxtField = new JTextField();
-//		carModelTxtField.addFocusListener(new FocusAdapter() {
-//			@Override
-//			public void focusLost(FocusEvent e) {
-//				parkCon.setModel(carModelTxtField.getText());
-//			}
-//		});
 		carModelTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carModelTxtField, "cell 3 3,growx");
 		carModelTxtField.setColumns(10);
@@ -179,12 +165,13 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carFuelTypeLbl, "cell 1 4,alignx right");
 
 		carFuelTypeComboBox = new JComboBox(fuelTypeOptions);
-//		carFuelTypeComboBox.addFocusListener(new FocusAdapter() {
-//			@Override
-//			public void focusLost(FocusEvent e) {
-//				parkCon.setFuelType((String)carFuelTypeComboBox.getSelectedItem());
-//			}
-//		});
+		carFuelTypeComboBox.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (carFuelTypeComboBox.getSelectedItem().equals("Elektrisk"))
+				chargerChckBox.setEnabled(true);
+			}
+		});
 		carFuelTypeComboBox.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carFuelTypeComboBox, "cell 3 4,growx");
 
@@ -267,7 +254,6 @@ public class AddParking extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(carModelTxtField, "Din parkering er ikke blevet gemt");
 					}
-					;
 				} catch (DataAccessException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -307,7 +293,6 @@ public class AddParking extends JFrame {
 			if (parkCon.getCar() == null) {
 				JOptionPane.showMessageDialog(carRegNoTxtField,
 						"Nummerplade ikke fundet\nVenligst indtast oplysningerne manuelt");
-				// addCarInfoManualInput();
 			} else {
 				carMakeTxtField.setText(parkCon.getMake());
 				carModelTxtField.setText(parkCon.getModel());
