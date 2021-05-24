@@ -103,6 +103,8 @@ public class Parking {
 		}
 	}
 	
-	
+	public void setService() {
+		service = null;
+	}
 
 }

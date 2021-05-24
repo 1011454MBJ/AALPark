@@ -133,7 +133,9 @@ public class AddParking extends JFrame {
 				// TODO Auto-generated method stub
 				if (chargerChckBox.isSelected()) {
 				parkCon.addSelectedService(carMakeTxtField.getText());
-			} 
+			} else {
+				parkCon.removeSelectedService();
+			}
 			}});
 		chargerChckBox.setFont(new Font("Arial", Font.PLAIN, 18));
 		chargerChckBox.setEnabled(false);

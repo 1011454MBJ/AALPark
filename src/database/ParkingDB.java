@@ -36,7 +36,9 @@ public class ParkingDB implements ParkingDBIF {
 			+ "from Parking where car_FK = (select top 1 id from Car " 
 			+ "where RegistrationNo = ? order by id desc) order by ParkingID desc;";
 	private PreparedStatement retrivalParkingID;
-	
+	private static final String insertServiceQ = "insert into Service (ServiceType, ServiceDate, ChargerID_FK, DeliveryStatus, ParkingID) "
+			+ "values (?, ?, ?, ?, ?)";
+	private PreparedStatement insertService;
 	
 	public ParkingDB() throws SQLException {
 		init();
@@ -57,6 +59,8 @@ public class ParkingDB implements ParkingDBIF {
 				.prepareStatement(insertClientQ, Statement.RETURN_GENERATED_KEYS);
 		retrivalParkingID = DatabaseConnection.getInstance().getConnection()
 				.prepareStatement(retrieveParkingIDQ);
+		insertService = DatabaseConnection.getInstance().getConnection()
+				.prepareStatement(insertServiceQ);
 
 	}
 

@@ -121,4 +121,9 @@ public class ParkingController implements ParkingDBIF {
 		parking.setService(carMake);
 	}
 
+	public void removeSelectedService() {
+		// TODO Auto-generated method stub
+		parking.setService();
+	}
+
 }
