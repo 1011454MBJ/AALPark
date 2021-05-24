@@ -56,7 +56,7 @@ public class ParkingController implements ParkingDBIF {
 
 	public int saveParking() throws DataAccessException, SQLException {
 		
-			return saveParking(parking);
+		return saveParking(parking);
 	
 	}
 
@@ -115,5 +115,10 @@ public class ParkingController implements ParkingDBIF {
 		// TODO Auto-generated method stub
 		return parkDB.getParkingID(regNo);
 	}
-	
+
+	public void addSelectedService(String carMake) {
+		// TODO Auto-generated method stub
+		parking.setService(carMake);
+	}
+
 }

@@ -9,6 +9,7 @@ public class Parking {
 	private int location;
 	private LocalDate returnDate;
 	private LocalDate departureDate;
+	private Service service;
 	
 	public Parking() {
 		
@@ -17,6 +18,7 @@ public class Parking {
 		location = 0;
 		returnDate = null;
 		departureDate = null;
+		service = null;
 	}
 
 	/**
@@ -87,6 +89,18 @@ public class Parking {
 	 */
 	public void setDepartureDate(LocalDate departureDate) {
 		this.departureDate = departureDate;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(String carMake) {
+		if (carMake.equalsIgnoreCase("Tesla")) {
+			service = Service.valueOf("Tesla");
+		} else {
+			service = Service.valueOf("EON");
+		}
 	}
 	
 	
