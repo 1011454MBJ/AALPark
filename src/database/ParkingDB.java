@@ -36,8 +36,8 @@ public class ParkingDB implements ParkingDBIF {
 			+ "from Parking where car_FK = (select top 1 id from Car " 
 			+ "where RegistrationNo = ? order by id desc) order by ParkingID desc;";
 	private PreparedStatement retrivalParkingID;
-	private static final String insertServiceQ = "insert into Service (ServiceType, ServiceDate, ChargerID_FK, DeliveryStatus, ParkingID) "
-			+ "values (?, ?, ?, ?, ?)";
+	private static final String insertServiceQ = "insert into Service (ServiceType, ServiceDate, "
+			+ "DeliveryStatus_FK, Parking_ID_FK) values (?, ?, ?, ?)";
 	private PreparedStatement insertService;
 	
 	public ParkingDB() throws SQLException {
@@ -89,7 +89,7 @@ public class ParkingDB implements ParkingDBIF {
 	@Override
 	public int saveParking(Parking parking) throws DataAccessException, SQLException {
 		// TODO Auto-generated method stub
-		int insert = -1;
+		int parkID = -1;
 		// boolean insert = false;
 		try {
 			DatabaseConnection.getInstance().startTransaction();
@@ -97,14 +97,31 @@ public class ParkingDB implements ParkingDBIF {
 
 			findOrInsertClient(parking, carID);
 
-			insert = insertParking(parking, carID);
+			parkID = insertParking(parking, carID);
+			
+			if (parking.getService() != null) {
+				insertService(parking, parkID);
+			}
 			DatabaseConnection.getInstance().commitTransaction();
 
 		} catch (SQLException e) {
 			DatabaseConnection.getInstance().rollbackTransaction();
 			throw new DataAccessException(e, "Parkeringen kunne ikke gemmes" + e.getMessage());
 		}
-		return insert;
+		return parkID;
+	}
+
+	private void insertService(Parking parking, int parkID) throws SQLException {
+		// TODO Auto-generated method stub
+//		(, , ChargerID_FK, DeliveryStatus, ) "
+//		+ "values (, 3?, 4?, )";
+		
+		insertService.setString(1, parking.getServiceType().toString());
+		insertService.setDate(2, java.sql.Date.valueOf(parking.getDepartureDate()));
+		//insertService.setInt(3, 0);
+		insertService.setInt(3, 1); // hardcoded to always be reserved when inserted
+		insertService.setInt(4, parkID);
+		insertService.executeUpdate();
 	}
 
 	private int insertParking(Parking parking, int carID) throws SQLException {

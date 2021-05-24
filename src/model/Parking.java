@@ -10,6 +10,7 @@ public class Parking {
 	private LocalDate returnDate;
 	private LocalDate departureDate;
 	private Service service;
+	private ServiceType serviceType;
 	
 	public Parking() {
 		
@@ -19,6 +20,7 @@ public class Parking {
 		returnDate = null;
 		departureDate = null;
 		service = null;
+		serviceType = null;
 	}
 
 	/**
@@ -91,20 +93,26 @@ public class Parking {
 		this.departureDate = departureDate;
 	}
 
-	public Service getService() {
-		return service;
-	}
-
 	public void setService(String carMake) {
+		serviceType = ServiceType.CHARGER;
 		if (carMake.equalsIgnoreCase("Tesla")) {
-			service = Service.valueOf("Tesla");
+			service = Service.TESLA;
 		} else {
-			service = Service.valueOf("EON");
+			service = Service.EON;
 		}
 	}
 	
 	public void setService() {
+		serviceType = null;
 		service = null;
+	}
+
+	public ServiceType getServiceType() {
+		return serviceType;
+	}
+
+	public Service getService() {
+		return service;
 	}
 
 }

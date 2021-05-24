@@ -92,8 +92,7 @@ public class AddParking extends JFrame {
 
 		this.setTitle("Aalborg Lufthavns Parkeringsservice");
 		this.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(AddParking.class
-						.getResource("/asset/AALlogo-schema.png")));
+				Toolkit.getDefaultToolkit().getImage(AddParking.class.getResource("/asset/AALlogo-schema.png")));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(100, 100, 870, 475);
 		parkingInfoPane = new JPanel();
@@ -125,18 +124,19 @@ public class AddParking extends JFrame {
 		JLabel extraServiceAddOnLbl = new JLabel("Ekstra service");
 		extraServiceAddOnLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(extraServiceAddOnLbl, "cell 5 1 3 1,alignx right,aligny baseline");
-		
+
 		chargerChckBox = new JCheckBox("Book ladestander");
 		chargerChckBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if (chargerChckBox.isSelected()) {
-				parkCon.addSelectedService(carMakeTxtField.getText());
-			} else {
-				parkCon.removeSelectedService();
+					parkCon.addSelectedService(carMakeTxtField.getText());
+				} else {
+					parkCon.removeSelectedService();
+				}
 			}
-			}});
+		});
 		chargerChckBox.setFont(new Font("Arial", Font.PLAIN, 18));
 		chargerChckBox.setEnabled(false);
 		parkingInfoPane.add(chargerChckBox, "cell 9 1");
@@ -198,7 +198,7 @@ public class AddParking extends JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (carFuelTypeComboBox.getSelectedItem().equals("Elektrisk"))
-				chargerChckBox.setEnabled(true);
+					chargerChckBox.setEnabled(true);
 			}
 		});
 		carFuelTypeComboBox.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -393,7 +393,6 @@ public class AddParking extends JFrame {
 //		}
 		return parkCon.saveParking();
 	}
-	
 
 	private void fillInClientInformation() {
 		// TODO Auto-generated method stub
