@@ -327,6 +327,7 @@ public class AddParking extends JFrame {
 						int parkID = parkCon.getParkingID(carRegNoTxtField.getText());
 						JOptionPane.showMessageDialog(carModelTxtField,
 								"Din parkering er nu gemt\r\n" + "Din parkering har fået ID nummer: " + parkID);
+						returnToFrontPage();
 					} else {
 						JOptionPane.showMessageDialog(carModelTxtField, "Din parkering er ikke blevet gemt");
 					}
@@ -352,7 +353,7 @@ public class AddParking extends JFrame {
 		cancelBtn.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(cancelBtn, "cell 10 13,growx");
 
-		debugData();
+//		debugData();
 	}
 
 	private void returnToFrontPage() {
@@ -421,6 +422,22 @@ public class AddParking extends JFrame {
 		bayTxtField.setText("1");
 		departureDateTxtField.setText("2020-12-12");
 		returnDateTxtField.setText("2020-12-12");
+	}
+	
+	public void reset() {
+		carRegNoTxtField.setText("");
+		carMakeTxtField.setText("");
+		carModelTxtField.setText("");
+		carFuelTypeComboBox.setSelectedItem("");
+		firstNameTxtField.setText("");
+		lastNameTxtField.setText("");
+		phoneNoTxtField.setText("");
+		emailTxtField.setText("");
+		lotTxtField.setText("");
+		rowTxtField.setText("");
+		bayTxtField.setText("");
+		departureDateTxtField.setText("");
+		returnDateTxtField.setText("");
 	}
 
 }
