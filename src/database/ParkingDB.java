@@ -111,7 +111,7 @@ public class ParkingDB implements ParkingDBIF {
 		return parkID;
 	}
 
-	private int insertService(Parking parking, int parkID) throws SQLException {
+	private void insertService(Parking parking, int parkID) throws SQLException {
 		// TODO Auto-generated method stub
 //		(, , ChargerID_FK, DeliveryStatus, ) "
 //		+ "values (, 3?, 4?, )";
@@ -122,11 +122,11 @@ public class ParkingDB implements ParkingDBIF {
 		insertService.setInt(3, 1); // hardcoded to always be reserved when inserted
 		insertService.setInt(4, parkID);
 		insertService.executeUpdate();
-		ResultSet serviceSet = insertService.getGeneratedKeys();
-		if (serviceSet.next()) {
-			return serviceSet.getInt(1);
-		}
-		return 0;
+//		ResultSet serviceSet = insertService.getGeneratedKeys();
+//		if (serviceSet.next()) {
+//			return serviceSet.getInt(1);
+//		}
+//		return 0;
 		
 	}
 

@@ -4,6 +4,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
+import java.awt.AWTException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -100,7 +101,7 @@ public class TestIntegration {
 		pCon.addCar(carDE.getRegNo());
 		
 		assertTrue(addPark.isFocusableWindow());
-		assertFalse(addPark.isForegroundSet());
+		assertFalse(addPark.getCarMake().equals(carDE.getMake()));
 	}
 	
 	//T4
@@ -180,6 +181,92 @@ public class TestIntegration {
 		int pID = pCon.saveParking();
 		
 		assertEquals(pID, pCon.getParkingID(dieselCarDK.getRegNo()), 0);
+		
+	}
+	
+	//T8
+	@Test
+	public void testIfClientCanBeNull() throws DataAccessException, SQLException {
+		pCon.createParking();
+		pCon.addCar(dieselCarDK.getRegNo());
+		pCon.addClientInformation(null, null, null, null, lot, row, bay, departureDate);
+		pCon.addDates(returnDate);
+		int pID = pCon.saveParking();
+		
+		PreparedStatement findClient = DatabaseConnection.getInstance().getConnection()
+				.prepareStatement("select top 1 "// Client.ID, 
+						+ "Client.Mail from Client where ClientCar_FK = " 
+						+ "(select Car.ID from Car where ParkingID = ?);");
+		findClient.setInt(1, pID);//dieselCarDK.getRegNo());
+		findClient.executeQuery();
+
+		ResultSet rs = findClient.getResultSet();
+		rs.next();
+		//int a = rs.getInt(1);
+		String b = rs.getString(2);
+		
+		//assertTrue(a == pID);
+		assertEquals(b, "");
+	}
+	
+	//T9
+	@Test
+	public void testDatabaseAccess() throws SQLException {
+		int pID = 1;
+		PreparedStatement findParking = DatabaseConnection.getInstance().getConnection()
+				.prepareStatement("select top 1 * from Car \r\n"
+						+ "where RegistrationNo = (select RegistrationNo from Car where RegistrationNo = " 
+						+ "(select RegistrationNo from Car where ID = (select Car_FK from Parking where ParkingID = ?)))\r\n"
+						+ "order by ID desc;");
+		findParking.setInt(1, pID);
+		findParking.executeQuery();
+
+		ResultSet rs = findParking.getResultSet();
+		rs.next();
+		//int cID = rs.getInt(1);
+		String cReg = rs.getString(2);
+		String cMake = rs.getString(3);
+		String cModel = rs.getString(4);
+		String cFuel = rs.getString(5);
+
+		assertTrue(cReg.equalsIgnoreCase("DI32106"));
+		assertTrue(cMake.equalsIgnoreCase("Opel"));
+		assertFalse(cModel.equalsIgnoreCase("Fiesta"));
+		assertTrue(cModel.equalsIgnoreCase("Astra"));
+		assertEquals(cFuel, "Diesel");
+		
+	}
+	
+	//T10
+	@Test
+	public void testIfDisplayFindsMockCarByRegNoInternalMockDatabase() throws DataAccessException {
+		pCon.createParking();
+		pCon.addCar(dieselCarDK.getRegNo());
+		
+		assertTrue(addPark.isFocusableWindow());
+		assertEquals(pCon.getMake(), "Volvo");
+		assertEquals(pCon.getModel(), "S40");
+		assertEquals(pCon.getFuelType(), "Diesel");
+		
+	}
+	
+	//T11
+	@Test
+	public void testIfDisplayFindsRealLiveCarByRegNoExternalMotorregisterDatabase() throws DataAccessException {
+		pCon.createParking();
+		pCon.addCar("BD84861");
+		
+		assertTrue(addPark.isFocusableWindow());
+		assertEquals(pCon.getMake(), "Ford");
+		assertEquals(pCon.getModel(), "Fiesta");
+		assertEquals(pCon.getFuelType(), "Benzin");
+	}
+	
+	//T12
+	@Test
+	public void testIfCancelButtonClosesParkingWindow() throws AWTException {
+		addPark.cancelButtonClicked();
+		assertFalse(addPark.isFocusableWindow());
 		
 	}
 

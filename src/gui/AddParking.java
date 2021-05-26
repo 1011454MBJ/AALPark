@@ -3,6 +3,7 @@ package gui;
 import controller.*;
 import database.DataAccessException;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -14,6 +15,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Robot;
 import java.awt.Toolkit;
 
 import javax.swing.JTextField;
@@ -54,6 +56,7 @@ public class AddParking extends JFrame {
 	private ParkingController parkCon;
 	private String[] fuelTypeOptions = { "...", "Benzin", "Diesel", "Elektrisk" };
 	private JCheckBox chargerChckBox;
+	private JButton cancelBtn;
 
 	/**
 	 * Launch the application.
@@ -344,7 +347,7 @@ public class AddParking extends JFrame {
 		persistParkingBtn.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(persistParkingBtn, "cell 9 13");
 
-		JButton cancelBtn = new JButton("Afbryd");
+		cancelBtn = new JButton("Afbryd");
 		cancelBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -356,6 +359,7 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(cancelBtn, "cell 10 13,growx");
 
 //		debugData();
+
 	}
 
 	private void returnToFrontPage() {
@@ -445,6 +449,30 @@ public class AddParking extends JFrame {
 		bayTxtField.setText("");
 		departureDateTxtField.setText("");
 		returnDateTxtField.setText("");
+	}
+	
+	public String getCarMake() {
+		return carMakeTxtField.getText();
+		
+	}
+	
+	public String getCarModel() {
+		return carModelTxtField.getText();
+		
+	}
+	
+	public String getCarFuelType() {
+		return (String) carFuelTypeComboBox.getSelectedItem();
+		
+	}
+	
+	public void cancelButtonClicked() throws AWTException {
+		Robot robot = new Robot();
+		robot.mouseMove(cancelBtn.getX(), cancelBtn.getY());
+		robot.delay(5000);
+		robot.mousePress(MouseEvent.MOUSE_PRESSED);
+		robot.mouseRelease(MouseEvent.MOUSE_RELEASED);
+		
 	}
 
 }
