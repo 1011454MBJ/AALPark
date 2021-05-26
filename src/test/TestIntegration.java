@@ -51,6 +51,7 @@ public class TestIntegration {
 
 	}
 
+	//T1
 	@Test
 	public void testHappyDaysDieselNoServiceAdded() throws DataAccessException, SQLException {
 		pCon.createParking();
@@ -63,6 +64,7 @@ public class TestIntegration {
 
 	}
 
+	//T2
 	@Test
 	public void testHappyDaysElektriskWithServiceAdded() throws DataAccessException, SQLException {
 		pCon.createParking();
@@ -89,6 +91,96 @@ public class TestIntegration {
 
 		assertEquals(a, "CHARGER");
 
+	}
+	
+	//T3
+	@Test
+	public void testGermanCarNotFoundInDataBase() throws DataAccessException {
+		pCon.createParking();
+		pCon.addCar(carDE.getRegNo());
+		
+		assertTrue(addPark.isFocusableWindow());
+		assertFalse(addPark.isForegroundSet());
+	}
+	
+	//T4
+	@Test
+	public void testIfDisplayUpdatesWhenDKPlatesAreRetyped() throws DataAccessException {
+		pCon.createParking();
+		pCon.addCar(dieselCarDK.getRegNo());
+		
+		assertEquals(pCon.getMake(), "Volvo");
+		assertEquals(pCon.getModel(), "S40");
+		assertEquals(pCon.getFuelType(), "Diesel");
+		
+		pCon.addCar("BE12345");
+		
+		assertEquals(pCon.getMake(), "Chevolet");
+		assertEquals(pCon.getModel(), "Corvette");
+		assertEquals(pCon.getFuelType(), "Benzin");
+		
+	}
+	
+	//T5
+	@Test
+	public void testIfDieselCarCanBookCharger() throws DataAccessException, SQLException {
+		pCon.createParking();
+		pCon.addCar(dieselCarDK.getRegNo());
+		
+		pCon.addCar(dieselCarDK.getRegNo(), "Renault", "Zoe", "Elektrisk");
+		
+		pCon.addClientInformation("Test", "Testesen", "+4512345678", "test@testesen.dk", lot, row, bay, departureDate);
+		pCon.addDates(returnDate);
+		
+		pCon.addSelectedService(dieselCarDK.getMake());
+		int pID = pCon.saveParking();
+		
+		PreparedStatement findServiceInDatabase = DatabaseConnection.getInstance().getConnection()
+				.prepareStatement("select ServiceType from Service\r\n"
+						+ "where Parking_ID_FK = (select top 1 Parking.ParkingID from Parking \r\n"
+						+ "where car_FK = (select top 1 ID from Car where RegistrationNo = ? order by ID desc) \r\n"
+						+ "order by ParkingID desc) \r\n"
+						+ "order by ServiceID_FK desc;");
+		findServiceInDatabase.setString(1, dieselCarDK.getRegNo());
+		findServiceInDatabase.executeQuery();
+
+		ResultSet rs = findServiceInDatabase.getResultSet();
+		rs.next();
+		String a = rs.getString(1);
+
+		assertEquals(a, "CHARGER");
+		
+	}
+	
+	//T6
+	@Test (expected = DataAccessException.class)
+	public void testIfParkingSavesWithNoLocation() throws DataAccessException, SQLException {
+		pCon.createParking();
+		pCon.addCar(dieselCarDK.getRegNo());
+		
+		pCon.addClientInformation("Test", "Testesen", "+4512345678", "test@testesen.dk", null, null, null, departureDate);
+		pCon.addDates(returnDate);
+		
+		pCon.addSelectedService(dieselCarDK.getMake());
+		int pID = pCon.saveParking();
+		
+		assertEquals(pID, pCon.getParkingID(dieselCarDK.getRegNo()), 0);
+	}
+	
+	//T7
+	@Test (expected = NullPointerException.class)
+	public void testIfParkingSavesWithNoDates() throws DataAccessException, SQLException {
+		pCon.createParking();
+		pCon.addCar(dieselCarDK.getRegNo());
+		
+		pCon.addClientInformation("Test", "Testesen", "+4512345678", "test@testesen.dk", lot, row, bay, null);
+		pCon.addDates(null);
+		
+		pCon.addSelectedService(dieselCarDK.getMake());
+		int pID = pCon.saveParking();
+		
+		assertEquals(pID, pCon.getParkingID(dieselCarDK.getRegNo()), 0);
+		
 	}
 
 	@After
