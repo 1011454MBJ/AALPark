@@ -412,7 +412,7 @@ public class AddParking extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void fillInDates() {
 		// TODO Auto-generated method stub
 		parkCon.addDates(returnDateTxtField.getText());
@@ -434,7 +434,7 @@ public class AddParking extends JFrame {
 		departureDateTxtField.setText("2020-12-12");
 		returnDateTxtField.setText("2020-12-12");
 	}
-	
+
 	public void reset() {
 		carRegNoTxtField.setText("");
 		carMakeTxtField.setText("");
@@ -450,29 +450,40 @@ public class AddParking extends JFrame {
 		departureDateTxtField.setText("");
 		returnDateTxtField.setText("");
 	}
-	
+
 	public String getCarMake() {
 		return carMakeTxtField.getText();
-		
-	}
-	
-	public String getCarModel() {
-		return carModelTxtField.getText();
-		
-	}
-	
-	public String getCarFuelType() {
-		return (String) carFuelTypeComboBox.getSelectedItem();
-		
-	}
-	
-	public void cancelButtonClicked() throws AWTException {
-		Robot robot = new Robot();
-		robot.mouseMove(cancelBtn.getX(), cancelBtn.getY());
-		robot.delay(5000);
-		robot.mousePress(MouseEvent.MOUSE_PRESSED);
-		robot.mouseRelease(MouseEvent.MOUSE_RELEASED);
-		
+
 	}
 
+	public String getCarModel() {
+		return carModelTxtField.getText();
+
+	}
+
+	public String getCarFuelType() {
+		return (String) carFuelTypeComboBox.getSelectedItem();
+
+	}
+
+	public void cancelButtonClicked() throws AWTException {
+		Robot robot = new Robot();
+		cancelBtn.setVisible(true);
+		carRegNoTxtField.setText("DI12345");
+		findCar();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				//Thread.sleep(5000);
+				robot.mouseMove(cancelBtn.getX()+25, cancelBtn.getY()+25);
+				//robot.delay(5000);
+				//robot.mousePress(MouseEvent.MOUSE_PRESSED);
+				//robot.mouseRelease(MouseEvent.MOUSE_RELEASED);
+				robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
+				robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
+
+	}
+
+});
+	}
 }

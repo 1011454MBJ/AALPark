@@ -265,6 +265,7 @@ public class TestIntegration {
 	//T12
 	@Test
 	public void testIfCancelButtonClosesParkingWindow() throws AWTException {
+		
 		addPark.cancelButtonClicked();
 		assertFalse(addPark.isFocusableWindow());
 		
