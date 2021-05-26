@@ -40,7 +40,7 @@ public class ParkingController implements ParkingDBIF {
 
 	public void addClientInformation(String firstName, String lastName, String phoneNo, 
 									String mail, String lot, String row, String bay, 
-									String departureDate, String returnDate) throws DataAccessException {
+									String departureDate) throws DataAccessException {
 
 		client = clientController.createClient(firstName, lastName, phoneNo, mail);
 		parking.addClientInformation(client);
@@ -48,10 +48,12 @@ public class ParkingController implements ParkingDBIF {
 		
 		parking.setLocation(location);
 		LocalDate departDate = LocalDate.parse(departureDate);
-		LocalDate dueBackDate = LocalDate.parse(returnDate);
 		parking.setDepartureDate(departDate);
-		parking.setReturnDate(dueBackDate);
+	}
 
+	public void addDates(String returnDate) {
+		LocalDate dueBackDate = LocalDate.parse(returnDate);
+		parking.setReturnDate(dueBackDate);
 	}
 
 	public int saveParking() throws DataAccessException, SQLException {

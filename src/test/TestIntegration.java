@@ -41,7 +41,7 @@ public class TestIntegration {
 		test = new Client("Test", "Testesen", "test@testesen.dk", "+4512345678");
 		hansi = new Client("Hansi", "Hinterseer", "hansi@hinterseer.de", "+4504143329590");
 		dieselCarDK = new Car("DI12345", "Volvo", "S40", "Diesel");
-		elektriskCarDK = new Car("EL12345", "Renault", "Zoe", "Elektrisk");
+		elektriskCarDK = new Car("EL32106", "Toyota", "Yaris", "Elektrisk");
 		carDE = new Car("WOBZK295", "Audi", "Q7", "Benzin");
 		departureDate = new String("2021-05-17");
 		returnDate = new String("2021-06-25");
@@ -55,8 +55,8 @@ public class TestIntegration {
 	public void testHappyDaysDieselNoServiceAdded() throws DataAccessException, SQLException {
 		pCon.createParking();
 		pCon.addCar(dieselCarDK.getRegNo());
-		pCon.addClientInformation("Test", "Testesen", "+4512345678", "test@testesen.dk", lot, row, bay, departureDate,
-				returnDate);
+		pCon.addClientInformation("Test", "Testesen", "+4512345678", "test@testesen.dk", lot, row, bay, departureDate);
+		pCon.addDates(returnDate);
 		int pID = pCon.saveParking();
 
 		assertEquals(pID, pCon.getParkingID(dieselCarDK.getRegNo()), 0);
@@ -67,8 +67,8 @@ public class TestIntegration {
 	public void testHappyDaysElektriskWithServiceAdded() throws DataAccessException, SQLException {
 		pCon.createParking();
 		pCon.addCar(elektriskCarDK.getRegNo());
-		pCon.addClientInformation("Test", "Testesen", "+4512345678", "test@testesen.dk", lot, row, bay, departureDate,
-				returnDate);
+		pCon.addClientInformation("Test", "Testesen", "+4512345678", "test@testesen.dk", lot, row, bay, departureDate);
+		pCon.addDates( returnDate);
 		pCon.addSelectedService(elektriskCarDK.getMake());
 		int pID = pCon.saveParking();
 

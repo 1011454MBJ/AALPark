@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
@@ -51,7 +52,7 @@ public class AddParking extends JFrame {
 	private JTextField departureDateTxtField;
 	private JTextField returnDateTxtField;
 	private ParkingController parkCon;
-	private String[] fuelTypeOptions = { " ", "Benzin", "Diesel", "Elektrisk" };
+	private String[] fuelTypeOptions = { "...", "Benzin", "Diesel", "Elektrisk" };
 	private JCheckBox chargerChckBox;
 
 	/**
@@ -243,6 +244,7 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(departureDateLbl, "cell 5 7 3 1,alignx right");
 
 		departureDateTxtField = new JTextField();
+		departureDateTxtField.setText(LocalDate.now().toString());
 		departureDateTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -276,7 +278,7 @@ public class AddParking extends JFrame {
 		returnDateTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				fillInClientInformation();
+				fillInDates();
 			}
 		});
 		returnDateTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -400,11 +402,16 @@ public class AddParking extends JFrame {
 		try {
 			parkCon.addClientInformation(firstNameTxtField.getText(), lastNameTxtField.getText(),
 					phoneNoTxtField.getText(), emailTxtField.getText(), lotTxtField.getText(), rowTxtField.getText(),
-					bayTxtField.getText(), departureDateTxtField.getText(), returnDateTxtField.getText());
+					bayTxtField.getText(), departureDateTxtField.getText());
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void fillInDates() {
+		// TODO Auto-generated method stub
+		parkCon.addDates(returnDateTxtField.getText());
 	}
 
 	private void debugData() {
