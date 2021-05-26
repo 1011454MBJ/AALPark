@@ -14,6 +14,11 @@ import controller.*;
 import model.*;
 import database.*;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class TestIntegration {
 
 	private AddParking addPark;
@@ -39,8 +44,8 @@ public class TestIntegration {
 	public void setUp() throws SQLException {
 		addPark = new AddParking();
 		pCon = new ParkingController();
-		test = new Client("Test", "Testesen", "test@testesen.dk", "+4512345678");
-		hansi = new Client("Hansi", "Hinterseer", "hansi@hinterseer.de", "+4504143329590");
+		test = new Client("Test", "Testesen", "+4512345678", "test@testesen.dk");
+		hansi = new Client("Hansi", "Hinterseer", "+4504143329590", "hansi@hinterseer.de");
 		dieselCarDK = new Car("DI12345", "Volvo", "S40", "Diesel");
 		elektriskCarDK = new Car("EL32106", "Toyota", "Yaris", "Elektrisk");
 		carDE = new Car("WOBZK295", "Audi", "Q7", "Benzin");
@@ -52,59 +57,25 @@ public class TestIntegration {
 
 	}
 
-	//T1
+	//T3 - Test if foreign car can be found in database and saves parking to database. Should Pass!
 	@Test
-	public void testHappyDaysDieselNoServiceAdded() throws DataAccessException, SQLException {
-		pCon.createParking();
-		pCon.addCar(dieselCarDK.getRegNo());
-		pCon.addClientInformation("Test", "Testesen", "+4512345678", "test@testesen.dk", lot, row, bay, departureDate);
-		pCon.addDates(returnDate);
-		int pID = pCon.saveParking();
-
-		assertEquals(pID, pCon.getParkingID(dieselCarDK.getRegNo()), 0);
-
-	}
-
-	//T2
-	@Test
-	public void testHappyDaysElektriskWithServiceAdded() throws DataAccessException, SQLException {
-		pCon.createParking();
-		pCon.addCar(elektriskCarDK.getRegNo());
-		pCon.addClientInformation("Test", "Testesen", "+4512345678", "test@testesen.dk", lot, row, bay, departureDate);
-		pCon.addDates( returnDate);
-		pCon.addSelectedService(elektriskCarDK.getMake());
-		int pID = pCon.saveParking();
-
-		assertEquals(pID, pCon.getParkingID(elektriskCarDK.getRegNo()), 0);
-
-		PreparedStatement findServiceInDatabase = DatabaseConnection.getInstance().getConnection()
-				.prepareStatement("select ServiceType from Service\r\n"
-						+ "where Parking_ID_FK = (select top 1 Parking.ParkingID from Parking \r\n"
-						+ "where car_FK = (select top 1 ID from Car where RegistrationNo = ? order by ID desc) \r\n"
-						+ "order by ParkingID desc) \r\n"
-						+ "order by ServiceID_FK desc;");
-		findServiceInDatabase.setString(1, elektriskCarDK.getRegNo());
-		findServiceInDatabase.executeQuery();
-
-		ResultSet rs = findServiceInDatabase.getResultSet();
-		rs.next();
-		String a = rs.getString(1);
-
-		assertEquals(a, "CHARGER");
-
-	}
-	
-	//T3
-	@Test
-	public void testGermanCarNotFoundInDataBase() throws DataAccessException {
+	public void testGermanCarNotFoundInDataBase() throws DataAccessException, SQLException {
 		pCon.createParking();
 		pCon.addCar(carDE.getRegNo());
 		
 		assertTrue(addPark.isFocusableWindow());
 		assertFalse(addPark.getCarMake().equals(carDE.getMake()));
+		
+		pCon.addCar(carDE.getRegNo(), carDE.getMake(), carDE.getModel(), carDE.getFuelType());
+		pCon.addClientInformation("Hansi", "Hinterseer", "+4504143329590", "hansi@hinterseer.de", lot, row, bay, departureDate);
+		pCon.addDates( returnDate);
+		
+		int pID = pCon.saveParking();
+
+		assertEquals(pID, pCon.getParkingID(carDE.getRegNo()), 0);
 	}
 	
-	//T4
+	//T4 - Test if textfields update if wrong plates are typed in first. Should Pass!
 	@Test
 	public void testIfDisplayUpdatesWhenDKPlatesAreRetyped() throws DataAccessException {
 		pCon.createParking();
@@ -122,7 +93,7 @@ public class TestIntegration {
 		
 	}
 	
-	//T5
+	//T5 - Test if a diesel plate car can book service addon if information is changed. Should Pass even if it is a cheat!
 	@Test
 	public void testIfDieselCarCanBookCharger() throws DataAccessException, SQLException {
 		pCon.createParking();
@@ -153,7 +124,7 @@ public class TestIntegration {
 		
 	}
 	
-	//T6
+	//T6 - Test if location can be empty - Should throw an exception to Pass!
 	@Test (expected = DataAccessException.class)
 	public void testIfParkingSavesWithNoLocation() throws DataAccessException, SQLException {
 		pCon.createParking();
@@ -168,7 +139,7 @@ public class TestIntegration {
 		assertEquals(pID, pCon.getParkingID(dieselCarDK.getRegNo()), 0);
 	}
 	
-	//T7
+	//T7 - Test if dates can be empty - Should throw exception to Pass!
 	@Test (expected = NullPointerException.class)
 	public void testIfParkingSavesWithNoDates() throws DataAccessException, SQLException {
 		pCon.createParking();
@@ -184,7 +155,8 @@ public class TestIntegration {
 		
 	}
 	
-	//T8
+	//T8 - Test if Client can be Null. Should add a nullable Client to Parking and save it.
+	// So far test fails because you can't change the first choice yet.
 	@Test
 	public void testIfClientCanBeNull() throws DataAccessException, SQLException {
 		pCon.createParking();
@@ -209,35 +181,7 @@ public class TestIntegration {
 		assertEquals(b, "");
 	}
 	
-	//T9
-	@Test
-	public void testDatabaseAccess() throws SQLException {
-		int pID = 1;
-		PreparedStatement findParking = DatabaseConnection.getInstance().getConnection()
-				.prepareStatement("select top 1 * from Car \r\n"
-						+ "where RegistrationNo = (select RegistrationNo from Car where RegistrationNo = " 
-						+ "(select RegistrationNo from Car where ID = (select Car_FK from Parking where ParkingID = ?)))\r\n"
-						+ "order by ID desc;");
-		findParking.setInt(1, pID);
-		findParking.executeQuery();
-
-		ResultSet rs = findParking.getResultSet();
-		rs.next();
-		//int cID = rs.getInt(1);
-		String cReg = rs.getString(2);
-		String cMake = rs.getString(3);
-		String cModel = rs.getString(4);
-		String cFuel = rs.getString(5);
-
-		assertTrue(cReg.equalsIgnoreCase("DI32106"));
-		assertTrue(cMake.equalsIgnoreCase("Opel"));
-		assertFalse(cModel.equalsIgnoreCase("Fiesta"));
-		assertTrue(cModel.equalsIgnoreCase("Astra"));
-		assertEquals(cFuel, "Diesel");
-		
-	}
-	
-	//T10
+	//T10 - Test for finding a mock car in the MockMotorregister database. Should Pass if using mock!
 	@Test
 	public void testIfDisplayFindsMockCarByRegNoInternalMockDatabase() throws DataAccessException {
 		pCon.createParking();
@@ -250,7 +194,8 @@ public class TestIntegration {
 		
 	}
 	
-	//T11
+	//T11 - Test for finding a real car in the real Motorregister database. Should fail if using mock!
+	//Feature should Pass if real data is inserted into mock database
 	@Test
 	public void testIfDisplayFindsRealLiveCarByRegNoExternalMotorregisterDatabase() throws DataAccessException {
 		pCon.createParking();
@@ -262,15 +207,6 @@ public class TestIntegration {
 		assertEquals(pCon.getFuelType(), "Benzin");
 	}
 	
-	//T12
-	@Test
-	public void testIfCancelButtonClosesParkingWindow() throws AWTException {
-		
-		addPark.cancelButtonClicked();
-		assertFalse(addPark.isFocusableWindow());
-		
-	}
-
 	@After
 	public void tearDown() {
 		addPark.reset();

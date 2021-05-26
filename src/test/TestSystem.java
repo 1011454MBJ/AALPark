@@ -18,6 +18,11 @@ import gui.AddParking;
 import model.Car;
 import model.Client;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class TestSystem {
 
 	private AddParking addPark;
@@ -56,7 +61,7 @@ public class TestSystem {
 
 	}
 
-	//T1
+	//T1 - HappyDays scenario with diesel car. Test should Pass!
 	@Test
 	public void testHappyDaysDieselNoServiceAdded() throws DataAccessException, SQLException {
 		pCon.createParking();
@@ -69,7 +74,7 @@ public class TestSystem {
 
 	}
 
-	//T2
+	//T2 - HappyDays scenario with electric car and service addon. Test should Pass!
 	@Test
 	public void testHappyDaysElektriskWithServiceAdded() throws DataAccessException, SQLException {
 		pCon.createParking();
@@ -98,7 +103,7 @@ public class TestSystem {
 
 	}
 	
-	//T9
+	//T9 - Testing database access. Should Pass if computer is online!
 	@Test
 	public void testDatabaseAccess() throws SQLException {
 		int pID = 1;

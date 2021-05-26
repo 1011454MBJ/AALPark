@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class Car {
 	
 	private String make;
@@ -7,6 +12,9 @@ public class Car {
 	private String regNo;
 	private String fuelType;
 	
+	/*
+	 * Constructor for Car
+	 */
 	public Car(String regNo, String make, String model, String fuelType) {
 		
 		this.regNo = regNo;

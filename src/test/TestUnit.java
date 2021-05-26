@@ -18,6 +18,11 @@ import gui.AddParking;
 import model.Car;
 import model.Client;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class TestUnit {
 
 	private AddParking addPark;
@@ -56,7 +61,7 @@ public class TestUnit {
 
 	}
 	
-	//T12
+	//T12 - Test if CancelButton works. Should Pass, but throws an assertError!
 	@Test
 	public void testIfCancelButtonClosesParkingWindow() throws AWTException {
 		

@@ -7,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class DatabaseConnection {
 	
 	private Connection connection = null;
@@ -19,6 +24,9 @@ public class DatabaseConnection {
 	private static final String userName = "dmaa0920_1011454";
 	private static final String password = "Password1!";
 	
+	/*
+	 * Constructor (Singleton)
+	 */
 	private DatabaseConnection() {
 		String connectionString = String.format("jdbc:sqlserver://%s:%d;databaseName=%s;user=%s;password=%s", 
 				serverAddress, serverPort, dbName, userName, password);
@@ -35,6 +43,9 @@ public class DatabaseConnection {
 		}
 	}
 	
+	/*
+	 * Returns instance if one is created. Else create one
+	 */
 	public static DatabaseConnection getInstance() {
 		if(dbConnection == null) {
 			dbConnection = new DatabaseConnection();
@@ -42,66 +53,40 @@ public class DatabaseConnection {
 		return dbConnection;
 	}
 	
+	/*
+	 * Starting transaction
+	 */
 	public void startTransaction() throws SQLException {
 		connection.setAutoCommit(false);
 	}
 	
+	/*
+	 * Committing transaction 
+	 */
 	public void commitTransaction() throws SQLException {
 		connection.commit();
 		connection.setAutoCommit(true);
 	}
 	
+	/*
+	 * If transaction fails - erase all data attempted to be modified
+	 */
 	public void rollbackTransaction() throws SQLException {
 		connection.rollback();
 		connection.setAutoCommit(true);
 	}
 	
-//	public int executeInsertWithIdentity(PreparedStatement ps) throws SQLException  {
+//	public int executeUpdate(String sql) throws SQLException {
+//		System.out.println("DBConnection, Updating: " + sql);
 //		int res = -1;
-//		try {
-//			res = ps.executeUpdate();
-//			if(res > 0) {
-//				ResultSet rs = ps.getGeneratedKeys();
-//				rs.next();
-//				res = rs.getInt(1);
-//			}
+//		try (Statement s = connection.createStatement()){
+//			res = s.executeUpdate(sql);
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //			throw e;
 //		}
 //		return res;
 //	}
-//	
-//	public int executeInsertWithIdentity(String sql) throws SQLException  {
-//		System.out.println("DBConnection, Inserting: " + sql);
-//		int res = -1;
-//		try (Statement s = connection.createStatement()) {
-//			res = s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-//			if(res > 0) {
-//				ResultSet rs = s.getGeneratedKeys();
-//				rs.next();
-//				res = rs.getInt(1);
-//			}
-//			//s.close(); -- the try block does this for us now
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw e;
-//		}
-//		return res;
-//	}
-	
-	public int executeUpdate(String sql) throws SQLException {
-		System.out.println("DBConnection, Updating: " + sql);
-		int res = -1;
-		try (Statement s = connection.createStatement()){
-			res = s.executeUpdate(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		}
-		return res;
-	}
 	
 	
 	public Connection getConnection() {

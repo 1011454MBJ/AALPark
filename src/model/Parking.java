@@ -2,6 +2,11 @@ package model;
 
 import java.time.LocalDate;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class Parking {
 	
 	private Car car;
@@ -12,6 +17,9 @@ public class Parking {
 	private Service service;
 	private ServiceType serviceType;
 	
+	/*
+	 * Constructor for the Parking object
+	 */
 	public Parking() {
 		
 		car = null;
@@ -93,6 +101,9 @@ public class Parking {
 		this.departureDate = departureDate;
 	}
 
+	/*
+	 * @param carMake determines which service
+	 */
 	public void setService(String carMake) {
 		serviceType = ServiceType.CHARGER;
 		if (carMake.equalsIgnoreCase("Tesla")) {
@@ -102,15 +113,24 @@ public class Parking {
 		}
 	}
 	
+	/*
+	 * Setting the service back to null
+	 */
 	public void setService() {
 		serviceType = null;
 		service = null;
 	}
 
+	/*
+	 * Returns the ServiceType
+	 */
 	public ServiceType getServiceType() {
 		return serviceType;
 	}
 
+	/*
+	 * Returns the Service
+	 */
 	public Service getService() {
 		return service;
 	}

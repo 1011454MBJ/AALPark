@@ -19,6 +19,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class FrontPage extends JFrame {
 
 	private JPanel frontPagePane;
@@ -52,7 +57,6 @@ public class FrontPage extends JFrame {
 	 */
 	private void initialize() {
 		
-		//frontPageFrame = new JFrame();
 		setTitle("Aalborg Lufthavns Parkeringsservice");
 		setIconImage(
 				Toolkit.getDefaultToolkit().getImage(FrontPage.class.getResource("/asset/AALlogo-schema.png")));
@@ -139,13 +143,15 @@ public class FrontPage extends JFrame {
 		welcomePanel.add(frontPageSubtitleLbl, "cell 0 2");
 	}
 	
+//	private void showNewParkingDialog() {
+//		NewParkingDialog newParkingDialog = new NewParkingDialog();
+//		newParkingDialog.setVisible(true);
+//	}
+//	
 
-	private void showNewParkingDialog() {
-		NewParkingDialog newParkingDialog = new NewParkingDialog();
-		newParkingDialog.setVisible(true);
-	}
-	
-
+	/*
+	 * Goes straight to AddParking where information can be entered
+	 */
 	private void showNewAddParking() {
 		AddParking addParking = new AddParking();
 		addParking.setVisible(true);

@@ -17,6 +17,11 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class NewParkingDialog extends JDialog {
 
 	private final JPanel newParkingPlateSearch = new JPanel();

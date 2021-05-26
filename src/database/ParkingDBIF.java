@@ -4,6 +4,11 @@ import java.sql.SQLException;
 
 import model.Parking;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public interface ParkingDBIF {
 
 	int saveParking(Parking parking) throws DataAccessException, SQLException;

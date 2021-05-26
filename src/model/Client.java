@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class Client {
 	
 	private String firstName;
@@ -7,6 +12,9 @@ public class Client {
 	private String phoneNo;
 	private String mail;
 	
+	/*
+	 * Constructor for Client
+	 */
 	public Client(String firstName, String lastName, String phoneNo, String mail) {
 		
 		this.firstName = firstName;

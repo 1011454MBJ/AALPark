@@ -7,6 +7,11 @@ import java.sql.Statement;
 
 import model.Parking;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class ParkingDB implements ParkingDBIF {
 
 	private static final String findBayByIDQ = "select Bay.ID\r\n" + "  from Bay\r\n" 
@@ -40,10 +45,16 @@ public class ParkingDB implements ParkingDBIF {
 			+ "DeliveryStatus_FK, Parking_ID_FK) values (?, ?, ?, ?)";
 	private PreparedStatement insertService;
 	
+	/*
+	 * Constructor
+	 */
 	public ParkingDB() throws SQLException {
 		init();
 	}
 
+	/*
+	 * Initialize all the statements
+	 */
 	private void init() throws SQLException {
 		findBayByID = DatabaseConnection.getInstance().getConnection()
 				.prepareStatement(findBayByIDQ);
@@ -64,6 +75,9 @@ public class ParkingDB implements ParkingDBIF {
 
 	}
 
+	/*
+	 * Search for the bay ID with the lot, row and bay number
+	 */
 	@Override
 	public int findBayByID(String lot, String row, String bay) throws DataAccessException {
 		// TODO Auto-generated method stub
@@ -86,11 +100,12 @@ public class ParkingDB implements ParkingDBIF {
 		}
 	}
 
+	/*
+	 * Persist parking to respective tables in database
+	 */
 	@Override
 	public int saveParking(Parking parking) throws DataAccessException, SQLException {
-		// TODO Auto-generated method stub
 		int parkID = -1;
-		// boolean insert = false;
 		try {
 			DatabaseConnection.getInstance().startTransaction();
 			int carID = findOrInsertCar(parking);
@@ -111,11 +126,10 @@ public class ParkingDB implements ParkingDBIF {
 		return parkID;
 	}
 
+	/*
+	 * Insert to table Service
+	 */
 	private void insertService(Parking parking, int parkID) throws SQLException {
-		// TODO Auto-generated method stub
-//		(, , ChargerID_FK, DeliveryStatus, ) "
-//		+ "values (, 3?, 4?, )";
-		
 		insertService.setString(1, parking.getServiceType().toString());
 		insertService.setDate(2, java.sql.Date.valueOf(parking.getDepartureDate()));
 		//insertService.setInt(3, 0);
@@ -130,6 +144,9 @@ public class ParkingDB implements ParkingDBIF {
 		
 	}
 
+	/*
+	 * Insert to table Parking
+	 */
 	private int insertParking(Parking parking, int carID) throws SQLException {
 		insertParking.setInt(1, parking.getLocation());
 		insertParking.setDate(2, java.sql.Date.valueOf(parking.getDepartureDate()));
@@ -143,6 +160,9 @@ public class ParkingDB implements ParkingDBIF {
 		return 0;
 	}
 
+	/*
+	 * Insert to table Client
+	 */
 	private void findOrInsertClient(Parking parking, int carID) throws SQLException {
 		findClient.setString(1, parking.getClient().getMail());
 		ResultSet clientSet = findClient.executeQuery();
@@ -166,6 +186,9 @@ public class ParkingDB implements ParkingDBIF {
 		//return clientID;
 	}
 	
+	/*
+	 * Insert to table Car
+	 */
 	private int findOrInsertCar(Parking parking) throws SQLException {
 		findCar.setString(1, parking.getCar().getRegNo());
 		ResultSet carSet = findCar.executeQuery();
@@ -186,6 +209,9 @@ public class ParkingDB implements ParkingDBIF {
 		return carID;
 	}
 	
+	/*
+	 * Find a ParkingID
+	 */
 	@Override
 	public int getParkingID(String regNo) throws SQLException {
 		int parkingID = -1;

@@ -37,6 +37,11 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JCheckBox;
 
+/**
+ * @author Maibritt Bjørn Jacobsen
+ * @version 2021-05-28
+ */
+
 public class AddParking extends JFrame {
 
 	private JPanel parkingInfoPane;
@@ -89,7 +94,6 @@ public class AddParking extends JFrame {
 		try {
 			parkCon = new ParkingController();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		parkCon.createParking();
@@ -100,6 +104,8 @@ public class AddParking extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(100, 100, 870, 475);
 		parkingInfoPane = new JPanel();
+		parkingInfoPane.setForeground(new Color(51, 0, 153));
+		parkingInfoPane.setBackground(new Color(255, 255, 255));
 		parkingInfoPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setContentPane(parkingInfoPane);
 		parkingInfoPane.setLayout(
@@ -107,10 +113,13 @@ public class AddParking extends JFrame {
 						"[][grow][][][][10.00][10.00][][][][][][][]"));
 
 		JLabel carRegNoLbl = new JLabel("Nummerplade");
+		carRegNoLbl.setForeground(new Color(0, 0, 102));
 		carRegNoLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carRegNoLbl, "cell 1 1,alignx right");
 
 		carRegNoTxtField = new JTextField();
+		carRegNoTxtField.setBackground(new Color(204, 204, 204));
+		carRegNoTxtField.setForeground(new Color(0, 0, 102));
 		carRegNoTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -122,19 +131,22 @@ public class AddParking extends JFrame {
 		carRegNoTxtField.setColumns(10);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
 		parkingInfoPane.add(panel, "cell 4 1,grow");
 		panel.setLayout(new MigLayout("", "[]", "[]"));
 
 		JLabel extraServiceAddOnLbl = new JLabel("Ekstra service");
+		extraServiceAddOnLbl.setForeground(new Color(0, 0, 102));
 		extraServiceAddOnLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(extraServiceAddOnLbl, "cell 5 1 3 1,alignx right,aligny baseline");
 
 		chargerChckBox = new JCheckBox("Book ladestander");
+		chargerChckBox.setForeground(new Color(0, 0, 102));
+		chargerChckBox.setBackground(new Color(255, 255, 255));
 		chargerChckBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
-				if (chargerChckBox.isSelected()) {
+					if (chargerChckBox.isSelected()) {
 					parkCon.addSelectedService(carMakeTxtField.getText());
 				} else {
 					parkCon.removeSelectedService();
@@ -146,19 +158,25 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(chargerChckBox, "cell 9 1");
 
 		JLabel carMakeLbl = new JLabel("M\u00E6rke");
+		carMakeLbl.setForeground(new Color(0, 0, 102));
 		carMakeLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carMakeLbl, "cell 1 2,alignx right");
 
 		carMakeTxtField = new JTextField();
+		carMakeTxtField.setBackground(new Color(204, 204, 204));
+		carMakeTxtField.setForeground(new Color(0, 0, 102));
 		carMakeTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carMakeTxtField, "cell 3 2,growx");
 		carMakeTxtField.setColumns(10);
 
 		JLabel lotLbl = new JLabel("Parkingsplads");
+		lotLbl.setForeground(new Color(0, 0, 102));
 		lotLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(lotLbl, "cell 5 2 3 1,alignx right");
 
 		lotTxtField = new JTextField();
+		lotTxtField.setBackground(new Color(204, 204, 204));
+		lotTxtField.setForeground(new Color(0, 0, 102));
 		lotTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -170,19 +188,25 @@ public class AddParking extends JFrame {
 		lotTxtField.setColumns(10);
 
 		JLabel carModelLbl = new JLabel("Model");
+		carModelLbl.setForeground(new Color(0, 0, 102));
 		carModelLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carModelLbl, "cell 1 3,alignx right");
 
 		carModelTxtField = new JTextField();
+		carModelTxtField.setBackground(new Color(204, 204, 204));
+		carModelTxtField.setForeground(new Color(0, 0, 102));
 		carModelTxtField.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carModelTxtField, "cell 3 3,growx");
 		carModelTxtField.setColumns(10);
 
 		JLabel rowLbl = new JLabel("R\u00E6kke");
+		rowLbl.setForeground(new Color(0, 0, 102));
 		rowLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(rowLbl, "cell 5 3 3 1,alignx right");
 
 		rowTxtField = new JTextField();
+		rowTxtField.setBackground(new Color(204, 204, 204));
+		rowTxtField.setForeground(new Color(0, 0, 102));
 		rowTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -194,10 +218,13 @@ public class AddParking extends JFrame {
 		rowTxtField.setColumns(10);
 
 		JLabel carFuelTypeLbl = new JLabel("Br\u00E6ndstoftype");
+		carFuelTypeLbl.setForeground(new Color(0, 0, 102));
 		carFuelTypeLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(carFuelTypeLbl, "cell 1 4,alignx right");
 
 		carFuelTypeComboBox = new JComboBox(fuelTypeOptions);
+		carFuelTypeComboBox.setForeground(new Color(0, 0, 102));
+		carFuelTypeComboBox.setBackground(new Color(255, 255, 255));
 		carFuelTypeComboBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -209,10 +236,13 @@ public class AddParking extends JFrame {
 		parkingInfoPane.add(carFuelTypeComboBox, "cell 3 4,growx");
 
 		JLabel bayLbl = new JLabel("B\u00E5s");
+		bayLbl.setForeground(new Color(0, 0, 102));
 		bayLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(bayLbl, "cell 5 4 3 1,alignx right");
 
 		bayTxtField = new JTextField();
+		bayTxtField.setBackground(new Color(204, 204, 204));
+		bayTxtField.setForeground(new Color(0, 0, 102));
 		bayTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -224,14 +254,19 @@ public class AddParking extends JFrame {
 		bayTxtField.setColumns(10);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setForeground(new Color(51, 0, 153));
+		panel_1.setBackground(new Color(255, 255, 255));
 		parkingInfoPane.add(panel_1, "cell 1 5 3 2,grow");
 		panel_1.setLayout(new MigLayout("", "[]", "[]"));
 
 		JLabel firstNameLbl = new JLabel("Fornavn");
+		firstNameLbl.setForeground(new Color(0, 0, 102));
 		firstNameLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(firstNameLbl, "cell 1 7,alignx right");
 
 		firstNameTxtField = new JTextField();
+		firstNameTxtField.setBackground(new Color(204, 204, 204));
+		firstNameTxtField.setForeground(new Color(0, 0, 102));
 		firstNameTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -243,10 +278,13 @@ public class AddParking extends JFrame {
 		firstNameTxtField.setColumns(10);
 
 		JLabel departureDateLbl = new JLabel("Afgang den");
+		departureDateLbl.setForeground(new Color(0, 0, 102));
 		departureDateLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(departureDateLbl, "cell 5 7 3 1,alignx right");
 
 		departureDateTxtField = new JTextField();
+		departureDateTxtField.setBackground(new Color(204, 204, 204));
+		departureDateTxtField.setForeground(new Color(0, 0, 102));
 		departureDateTxtField.setText(LocalDate.now().toString());
 		departureDateTxtField.addFocusListener(new FocusAdapter() {
 			@Override
@@ -259,10 +297,13 @@ public class AddParking extends JFrame {
 		departureDateTxtField.setColumns(10);
 
 		JLabel lastNameLbl = new JLabel("Efternavn");
+		lastNameLbl.setForeground(new Color(0, 0, 102));
 		lastNameLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(lastNameLbl, "cell 1 8,alignx right");
 
 		lastNameTxtField = new JTextField();
+		lastNameTxtField.setBackground(new Color(204, 204, 204));
+		lastNameTxtField.setForeground(new Color(0, 0, 102));
 		lastNameTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -274,10 +315,13 @@ public class AddParking extends JFrame {
 		lastNameTxtField.setColumns(10);
 
 		JLabel returnDateLbl = new JLabel("Forventet ankomstdato den");
+		returnDateLbl.setForeground(new Color(0, 0, 102));
 		returnDateLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(returnDateLbl, "cell 5 8 3 1,alignx right");
 
 		returnDateTxtField = new JTextField();
+		returnDateTxtField.setBackground(new Color(204, 204, 204));
+		returnDateTxtField.setForeground(new Color(0, 0, 102));
 		returnDateTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -289,12 +333,16 @@ public class AddParking extends JFrame {
 		returnDateTxtField.setColumns(10);
 
 		JLabel phoneNoLbl = new JLabel("Mobilnummer");
+		phoneNoLbl.setForeground(new Color(0, 0, 102));
 		phoneNoLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(phoneNoLbl, "cell 1 9,alignx right");
 
 		phoneNoTxtField = new JTextField();
+		phoneNoTxtField.setBackground(new Color(204, 204, 204));
+		phoneNoTxtField.setForeground(new Color(0, 0, 102));
 		phoneNoTxtField.addFocusListener(new FocusAdapter() {
 			@Override
+			// example of using more threads
 			public void focusLost(FocusEvent e) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
@@ -309,10 +357,13 @@ public class AddParking extends JFrame {
 		phoneNoTxtField.setColumns(10);
 
 		JLabel emailLbl = new JLabel("Mailadresse");
+		emailLbl.setForeground(new Color(0, 0, 102));
 		emailLbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(emailLbl, "cell 1 10,alignx right");
 
 		emailTxtField = new JTextField();
+		emailTxtField.setBackground(new Color(204, 204, 204));
+		emailTxtField.setForeground(new Color(0, 0, 102));
 		emailTxtField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -337,7 +388,6 @@ public class AddParking extends JFrame {
 						JOptionPane.showMessageDialog(carModelTxtField, "Din parkering er ikke blevet gemt");
 					}
 				} catch (DataAccessException | SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -362,6 +412,9 @@ public class AddParking extends JFrame {
 
 	}
 
+	/*
+	 * Cancel button terminate the window AddParking
+	 */
 	private void returnToFrontPage() {
 		FrontPage frontPage = new FrontPage();
 		frontPage.setVisible(true);
@@ -370,6 +423,9 @@ public class AddParking extends JFrame {
 
 	}
 
+	/*
+	 * Finds car and construct the object
+	 */
 	private void findCar() {
 		try {
 			parkCon.addCar(carRegNoTxtField.getText());
@@ -382,42 +438,42 @@ public class AddParking extends JFrame {
 				carFuelTypeComboBox.setSelectedItem(parkCon.getFuelType());
 			}
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	/*
+	 * Persists the parking to the database
+	 */
 	private int saveParkingToDatabase() throws DataAccessException, SQLException {
-		// TODO Auto-generated method stub
-//		try {
-//			parkCon.addClientInformation(firstNameTxtField.getText(), lastNameTxtField.getText(),
-//					phoneNoTxtField.getText(), emailTxtField.getText(), lotTxtField.getText(), rowTxtField.getText(),
-//					bayTxtField.getText(), departureDateTxtField.getText(), returnDateTxtField.getText());
-//		} catch (DataAccessException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 		return parkCon.saveParking();
 	}
 
+	/*
+	 * Sets the Client information
+	 */
 	private void fillInClientInformation() {
-		// TODO Auto-generated method stub
 		try {
 			parkCon.addClientInformation(firstNameTxtField.getText(), lastNameTxtField.getText(),
 					phoneNoTxtField.getText(), emailTxtField.getText(), lotTxtField.getText(), rowTxtField.getText(),
 					bayTxtField.getText(), departureDateTxtField.getText());
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/*
+	 * Sets the return date
+	 */
 	private void fillInDates() {
-		// TODO Auto-generated method stub
 		parkCon.addDates(returnDateTxtField.getText());
 	}
 
+	/*
+	 * A set of dummy values for test purposes
+	 */
 	private void debugData() {
 		carRegNoTxtField.setText("BE12345");
 		findCar();
@@ -435,6 +491,9 @@ public class AddParking extends JFrame {
 		returnDateTxtField.setText("2020-12-12");
 	}
 
+	/*
+	 * A clear fields for test purposes
+	 */
 	public void reset() {
 		carRegNoTxtField.setText("");
 		carMakeTxtField.setText("");
@@ -451,6 +510,9 @@ public class AddParking extends JFrame {
 		returnDateTxtField.setText("");
 	}
 
+	/*
+	 * Access to further information for test purposes
+	 */
 	public String getCarMake() {
 		return carMakeTxtField.getText();
 
@@ -474,16 +536,16 @@ public class AddParking extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				//Thread.sleep(5000);
-				robot.mouseMove(cancelBtn.getX()+25, cancelBtn.getY()+25);
-				//robot.delay(5000);
-				//robot.mousePress(MouseEvent.MOUSE_PRESSED);
-				//robot.mouseRelease(MouseEvent.MOUSE_RELEASED);
+				// Thread.sleep(5000);
+				robot.mouseMove(cancelBtn.getX() + 25, cancelBtn.getY() + 25);
+				// robot.delay(5000);
+				// robot.mousePress(MouseEvent.MOUSE_PRESSED);
+				// robot.mouseRelease(MouseEvent.MOUSE_RELEASED);
 				robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
 				robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
 
-	}
+			}
 
-});
+		});
 	}
 }
