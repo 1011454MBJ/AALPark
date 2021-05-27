@@ -62,6 +62,7 @@ public class AddParking extends JFrame {
 	private String[] fuelTypeOptions = { "...", "Benzin", "Diesel", "Elektrisk" };
 	private JCheckBox chargerChckBox;
 	private JButton cancelBtn;
+	private Robot r;
 
 	/**
 	 * Launch the application.
@@ -146,7 +147,7 @@ public class AddParking extends JFrame {
 		chargerChckBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-					if (chargerChckBox.isSelected()) {
+				if (chargerChckBox.isSelected()) {
 					parkCon.addSelectedService(carMakeTxtField.getText());
 				} else {
 					parkCon.removeSelectedService();
@@ -408,6 +409,12 @@ public class AddParking extends JFrame {
 		cancelBtn.setFont(new Font("Arial", Font.PLAIN, 18));
 		parkingInfoPane.add(cancelBtn, "cell 10 13,growx");
 
+		try {
+			r = new Robot();
+		} catch (AWTException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 //		debugData();
 
 	}
@@ -529,23 +536,56 @@ public class AddParking extends JFrame {
 	}
 
 	public void cancelButtonClicked() throws AWTException {
-		Robot robot = new Robot();
-		cancelBtn.setVisible(true);
-		carRegNoTxtField.setText("DI12345");
-		findCar();
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				// Thread.sleep(5000);
-				robot.mouseMove(cancelBtn.getX() + 25, cancelBtn.getY() + 25);
-				// robot.delay(5000);
-				// robot.mousePress(MouseEvent.MOUSE_PRESSED);
-				// robot.mouseRelease(MouseEvent.MOUSE_RELEASED);
-				robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
-				robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
-
-			}
-
-		});
+//		Robot robot = new Robot();
+//		cancelBtn.setVisible(true);
+//		carRegNoTxtField.setText("DI12345");
+//		findCar();
+//		SwingUtilities.invokeLater(new Runnable() {
+//			@Override
+//			public void run() {
+//				// Thread.sleep(5000);
+//				robot.mouseMove(cancelBtn.getX() + 25, cancelBtn.getY() + 25);
+//				// robot.delay(5000);
+//				// robot.mousePress(MouseEvent.MOUSE_PRESSED);
+//				// robot.mouseRelease(MouseEvent.MOUSE_RELEASED);
+//				robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
+//				robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
+//
+//			}
+//
+//		});
+//		carRegNoTxtField.setText("DI12345");
+//		findCar();
+//		SwingUtilities.invokeLater(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					Thread.sleep(5000);
+//					r.mouseMove(cancelBtn.getX() + 25, cancelBtn.getY() + 25);
+//					r.mousePress(MouseEvent.MOUSE_PRESSED);
+//					r.mouseRelease(MouseEvent.MOUSE_RELEASED);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				
+//				// robot.delay(5000);
+//				// robot.mousePress(MouseEvent.MOUSE_PRESSED);
+//				// robot.mouseRelease(MouseEvent.MOUSE_RELEASED);
+//				robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
+//				robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
+//
+//			}
+//
+//		});
+//
+//		action(MouseEvent.BUTTON1_DOWN_MASK, cancelBtn);
+//		action(MouseEvent.MOUSE_RELEASED, cancelBtn);
+//	}
+//
+//	private void action(int button1DownMask, JButton cancelBtn2) {
+//		// TODO Auto-generated method stub
+//		cancelBtn2 = cancelBtn;
+//		int pressed = button1DownMask;
 	}
 }
