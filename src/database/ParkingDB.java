@@ -178,7 +178,7 @@ public class ParkingDB implements ParkingDBIF {
 			insertClient.setInt(5, 1);
 			insertClient.setInt(6, carID);
 			insertClient.executeUpdate();
-			ResultSet clientInsert = insertCar.getGeneratedKeys();
+			ResultSet clientInsert = insertClient.getGeneratedKeys();
 			if (clientInsert.next()) {
 				clientID = clientInsert.getInt(1);
 			}

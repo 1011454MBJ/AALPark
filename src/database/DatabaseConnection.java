@@ -75,18 +75,18 @@ public class DatabaseConnection {
 		connection.rollback();
 		connection.setAutoCommit(true);
 	}
-	
-//	public int executeUpdate(String sql) throws SQLException {
-//		System.out.println("DBConnection, Updating: " + sql);
-//		int res = -1;
-//		try (Statement s = connection.createStatement()){
-//			res = s.executeUpdate(sql);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw e;
-//		}
-//		return res;
-//	}
+	/*
+	public int executeUpdate(String sql) throws SQLException {
+		System.out.println("DBConnection, Updating: " + sql);
+		int res = -1;
+		try (Statement s = connection.createStatement()){
+			res = s.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return res;
+	}*/
 	
 	
 	public Connection getConnection() {
